@@ -8,7 +8,6 @@ from datetime import datetime
 import pytz
 import re
 
-
 def main():
     
     filepath1 = '../data/ConvAbuse_dataset/'

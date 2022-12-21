@@ -51,7 +51,8 @@ class DataManager():
                             index=self.dataset_groups[key].index
                             ))
                 
-                  
+        print(self.dataset_groups[key])
+        
     def open_file(self, files, flag):
         
 
