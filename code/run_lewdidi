@@ -11,10 +11,10 @@ import re
 
 def main():
     
-    filepath1 = '../data_practice/ConvAbuse_dataset/'
-    filepath2 = '../data_practice/ArMIS_dataset/'
-    filepath3 = '../data_practice/HS-Brexit_dataset/'
-    filepath4 = '../data_practice/MD-Agreement_dataset/'
+    filepath1 = '../data/ConvAbuse_dataset/'
+    filepath2 = '../data/ArMIS_dataset/'
+    filepath3 = '../data/HS-Brexit_dataset/'
+    filepath4 = '../data/MD-Agreement_dataset/'
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
     print(data)
     def_params = params_lewidi()
