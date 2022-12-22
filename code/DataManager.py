@@ -11,18 +11,13 @@ import numpy as np
 class DataManager():
     
     def __init__(self, filepathConv, filepathArMis, filepathBrex, filepathMD):
-        print("hello 1")
+
         self.dataset_groups= defaultdict(list)
-        print("hello 2")
         self.dataset_groups['conv_train'] = (self.open_file(filepathConv + 'ConvAbuse_train.json', 1))
-        print("hello 3")
         self.dataset_groups['conv_dev'] = (self.open_file(filepathConv + 'ConvAbuse_dev.json', 1))
-        print("hello 4")
         
         self.dataset_groups['ar_train'] = (self.open_file(filepathArMis + 'ArMIS_train.json', 0))
-        print("hello 5")
         self.dataset_groups['ar_dev'] = (self.open_file(filepathArMis + 'ArMIS_dev.json', 0))
-        print("hello 6")
         
         #HS-Brexit
         self.dataset_groups['br_train'] = (self.open_file(filepathBrex + 'HS-Brexit_train.json', 0))
@@ -32,17 +27,17 @@ class DataManager():
         self.dataset_groups['md_train'] = (self.open_file(filepathMD + 'MD-Agreement_train.json', 0))
         self.dataset_groups['md_dev'] = (self.open_file(filepathMD + 'MD-Agreement_dev.json', 0))
         
-        
+        print("hello1")
 
-        # for key in self.dataset_groups:
-        #     if key == 'conv_dev':
-        #         self.dataset_groups[key] = self.fill_the_dev(self.dataset_groups[key], 1)
-        #     elif key in ['ar_dev','br_dev','md_dev']:
-        #         self.dataset_groups[key] = self.fill_the_dev(self.dataset_groups[key], 0)
-        #     else:
-        #         continue
+        for key in self.dataset_groups:
+            if key == 'conv_dev':
+                self.dataset_groups[key] = self.fill_the_dev(self.dataset_groups[key], 1)
+            elif key in ['ar_dev','br_dev','md_dev']:
+                self.dataset_groups[key] = self.fill_the_dev(self.dataset_groups[key], 0)
+            else:
+                continue
     
-        
+        print("hello2")
         # for key in self.dataset_groups:
         #     self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
         #     print("I'm in with the", key, "dataset")
