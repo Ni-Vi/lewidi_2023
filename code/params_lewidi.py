@@ -1,4 +1,4 @@
-class params():
+class params_lewidi():
     def __init__(self):
         self.batch_size = 4
         self.learning_rate =  1e-7

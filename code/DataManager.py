@@ -36,7 +36,6 @@ class DataManager():
             else:
                 continue
     
-        print("hello5")
         for key in self.dataset_groups:
             self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
             print("I'm in with the", key, "dataset")
@@ -50,7 +49,6 @@ class DataManager():
                                 self.annotation_annotator_split(self.dataset_groups[key], flag), 
                                 index=self.dataset_groups[key].index
                                 ))
-        print("hello6")
         
     def open_file(self, files, flag):
         

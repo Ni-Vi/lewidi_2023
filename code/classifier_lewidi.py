@@ -425,4 +425,4 @@ class ToxicityClassifier():
                                     truncation=True)
         batch_info["inputs"] = tokens["input_ids"]
         batch_info["attentions"] = tokens["attention_mask"]
-        return 
+        return batch_info
