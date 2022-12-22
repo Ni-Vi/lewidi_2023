@@ -72,8 +72,11 @@ warnings.warn = warn
 
 class ToxicityClassifier():
     def __init__(self, data, annotators, params, task_labels=["toxic"]):
+        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        #if eng:
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.device = torch.device('cuda')
+        #if arab
+        #self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
         self.data = data
         self.annotators = annotators
 
