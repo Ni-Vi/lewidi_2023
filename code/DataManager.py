@@ -26,7 +26,7 @@ class DataManager():
         self.dataset_groups['md_train'] = (self.open_file(filepathMD + 'MD-Agreement_train.json', 0))
         self.dataset_groups['md_dev'] = (self.open_file(filepathMD + 'MD-Agreement_dev.json', 0))
         
-        print("hello1")
+
 
         for key in self.dataset_groups:
             if key == 'conv_dev':
@@ -36,21 +36,21 @@ class DataManager():
             else:
                 continue
     
-        print("hello2")
-        # for key in self.dataset_groups:
-        #     self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
-        #     print("I'm in with the", key, "dataset")
-        #     if key in ['conv_train','conv_dev']:
-        #         flag = 1
-        #     else:
-        #         flag = 0
+        print("hello3")
+        for key in self.dataset_groups:
+            self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
+            print("I'm in with the", key, "dataset")
+            if key in ['conv_train','conv_dev']:
+                flag = 1
+            else:
+                flag = 0
             
-        #     if (flag == 1):
-        #         self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
-        #                         self.annotation_annotator_split(self.dataset_groups[key], flag), 
-        #                         index=self.dataset_groups[key].index
-        #                         ))
-                
+            if (flag == 1):
+                self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
+                                self.annotation_annotator_split(self.dataset_groups[key], flag), 
+                                index=self.dataset_groups[key].index
+                                ))
+        print("hello4")
         
     def open_file(self, files, flag):
         
