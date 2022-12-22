@@ -11,11 +11,14 @@ from scipy.special import softmax
 
 import pandas as pd
 import numpy as np
+import os
+import time
 import math
+import re
 
 from random import *
+from datetime import date
 from collections import Counter, defaultdict
-
 
 class ClassifierBert(nn.Module):
     def __init__(self, device, tasks=["toxic"], labels=2):
@@ -55,12 +58,6 @@ class ClassifierBert(nn.Module):
             predictions = {task: [x.item() for x in torch.argmax(logits[task], dim=-1)] for task in self.tasks}
         return logits, predictions
 
-
-"""## General classifier
-The class that performs multi-task, multi-label classifications for a given dataset
-"""
-
-
 def warn(*args, **kwargs):
     pass
 
@@ -72,13 +69,13 @@ warnings.warn = warn
 
 class ToxicityClassifier():
     def __init__(self, data, annotators, params, task_labels=["toxic"]):
-        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         #if eng:
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        #if arab
-        #self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
+        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
         self.data = data
         self.annotators = annotators
+        #if arab
+        #self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
 
         self.multi_label, self.multi_task, self.ensemble, self.single, self.log_reg = False, False, False, False, False
         setattr(self, params.task, True)
@@ -151,7 +148,6 @@ class ToxicityClassifier():
             else:
               test.to_csv(os.path.join(self.params.source_dir, "results", "GHC", "test_file.csv"), index=False, header=False, mode="a")
             """
-
             train_batches = self.get_batches(train)
             test_batches = self.get_batches(test)
 
@@ -192,9 +188,9 @@ class ToxicityClassifier():
 
         for task_label in self.task_labels:
             _labels = [int(x) for x in self.data[task_label].dropna().tolist()]
-            weight = compute_class_weight('balanced',
-                                          np.unique(_labels),
-                                          _labels)
+            weight = compute_class_weight(class_weight = 'balanced',
+                                          classes = np.unique(_labels),
+                                          y = _labels)
             if len(weight) == 1:
                 weight = [0.01, 1]
             weight = torch.tensor(weight, dtype=torch.float32).to(self.device)
@@ -396,7 +392,6 @@ class ToxicityClassifier():
         for s in range(0, len(data), self.params.batch_size):
             e = s + self.params.batch_size if s + self.params.batch_size < len(data) else len(data)
             data_info = self.batch_to_info(data["text"].tolist()[s: e])
-
             anno_batch = dict()
             mask_batch = dict()
             for task_label in self.task_labels:
@@ -406,7 +401,7 @@ class ToxicityClassifier():
             data_info["labels"] = anno_batch
             data_info["masks"] = mask_batch
 
-            # data_info["majority_vote"] = data["toxic"].tolist()[s: e]
+            #data_info["majority_vote"] = data["toxic"].tolist()[s: e]
             data_info["batch_len"] = e - s
             if isinstance(self.params.batch_weight, str):
                 data_info["weights"] = data[self.params.batch_weight].tolist()[s: e]
