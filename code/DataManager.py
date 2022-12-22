@@ -10,7 +10,6 @@ import numpy as np
 
 class DataManager():
     
-        
     def __init__(self, filepathConv, filepathArMis, filepathBrex, filepathMD):
         print("hello 1")
         self.dataset_groups= defaultdict(list)
