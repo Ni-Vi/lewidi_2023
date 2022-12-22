@@ -230,6 +230,7 @@ class ToxicityClassifier():
                 class_loss = dict()
                 weighted_sum = 0
                 for task_label in self.task_labels:
+                    print("hello", task_label) #  logits[task_label], batch["masks"], batch["masks"][task_label])
                     masked_logits = logits[task_label][batch["masks"][task_label]]
                     masked_labels = [batch["labels"][task_label][x] for x in batch["masks"][task_label]]
                     if self.multi_task or self.ensemble:

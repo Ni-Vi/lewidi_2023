@@ -26,7 +26,7 @@ class DataManager():
         self.dataset_groups['md_train'] = (self.open_file(filepathMD + 'MD-Agreement_train.json', 0))
         self.dataset_groups['md_dev'] = (self.open_file(filepathMD + 'MD-Agreement_dev.json', 0))
         
-
+        print("Hello Tanvi")
 
         for key in self.dataset_groups:
             if key == 'conv_dev':
