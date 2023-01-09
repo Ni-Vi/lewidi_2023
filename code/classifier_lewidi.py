@@ -340,7 +340,6 @@ class ToxicityClassifier():
 
             masked_label_cols = [col + "_masked_label" for col in self.annotators]
             masked_pred_cols = [col + "_masked_pred" for col in self.annotators]
-            print(self.annotators)
             print(results)
             toxic_label = results[label_cols].sum(axis=1) / results[label_cols].count(axis=1) >= 0.5
             toxic_pred = results[pred_cols].sum(axis=1) / results[pred_cols].count(axis=1) >= 0.5
