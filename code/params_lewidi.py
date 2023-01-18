@@ -3,9 +3,9 @@ class params_lewidi():
         self.batch_size = 4
         self.learning_rate =  1e-7
         self.max_len = 128
-        self.num_epochs = 3
+        self.num_epochs = 5
         self.random_state = 9999
-        self.num_folds = 5
+        self.num_folds = 2
         self.task = "single"
         self.batch_weight = None
         self.sort_by = None
