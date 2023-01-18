@@ -13,7 +13,7 @@ from torch.optim import AdamW
 from torch.nn import functional as F
 from transformers import BertTokenizer, BertModel, BertConfig, get_scheduler
 from scipy.special import softmax
-from tqdm.auto import tqdm
+from tqdm import tqdm, trange
 
 import pandas as pd
 import numpy as np
@@ -21,8 +21,9 @@ import math
 
 from random import *
 from collections import Counter, defaultdict
+from rich.progress import track, Progress, BarColumn, MofNCompleteColumn, TimeElapsedColumn, TimeRemainingColumn
 
-
+training_progress_bar = Progress("{task.description}", BarColumn(), MofNCompleteColumn(), TimeElapsedColumn(), TimeRemainingColumn())
 
 
 class ClassifierBert(nn.Module):
@@ -154,13 +155,7 @@ class ToxicityClassifier():
             # testing on the validation set
             results = self.predict(test_batches)
             print("Test:")
-        # elif self.params.predict == "mc":
-        #     certainty_results = self.mc_predict(test_batches)
-        #     fold_result = self.predict(test_batches)
-        #     fold_result["fold"] = pd.Series([i for id in test_idx])
-        #     fold_result = fold_result.join(certainty_results)
-        #     results = results.append(fold_result)
-
+            
         scores = self.report_results(results)
         print(scores)
         return scores, results
@@ -210,65 +205,75 @@ class ToxicityClassifier():
                                                 test_size=.1)
 
         
-        num_training_steps = self.params.num_epochs * len(batches)
+        num_training_steps = self.params.num_epochs * len(train_batches)
         
-        lr_scheduler = get_scheduler(name="linear", optimizer=self.optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
-        progress_bar = tqdm(range(num_training_steps))
+        # lr_scheduler = get_scheduler(name="linear", optimizer=self.optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
+        
+        # progress_bar = tqdm(range(num_training_steps))
 
 
         self.loss = self.create_loss_functions()
-        self.model.train() 
-         
-        for epoch in range(self.params.num_epochs):
+        
+        with training_progress_bar: 
+            task_id = training_progress_bar.add_task("Training", total=self.params.num_epochs)
+            batch_task_id = training_progress_bar.add_task("Training batch", total=len(train_batches))
             
+            training_progress_bar.console.print("Starting with the training now...")
             
-            
-            loss_val = 0
-            for batch in train_batches:
-                X_ids = torch.tensor(batch["inputs"]).to(self.device)
-                X_att = torch.tensor(batch["attentions"]).to(self.device)
-                if len([x for task_label in self.task_labels for x in batch["masks"][task_label]]) == 0:
-                    continue
+            for epoch in range(self.params.num_epochs):
+                
+                self.model.train()
+                
+                loss_val = 0
+                for batch in train_batches:
+                    X_ids = torch.tensor(batch["inputs"]).to(self.device)
+                    X_att = torch.tensor(batch["attentions"]).to(self.device)
+                    if len([x for task_label in self.task_labels for x in batch["masks"][task_label]]) == 0:
+                        continue
 
-                logits, _ = self.model(X_ids, attn=X_att)
-                class_loss = dict()
-                weighted_sum = 0
-                for task_label in self.task_labels:
+                    logits, _ = self.model(X_ids, attn=X_att)
+                    class_loss = dict()
+                    weighted_sum = 0
+                    for task_label in self.task_labels:
 
-                    masked_logits = logits[task_label][batch["masks"][task_label]]
-                    masked_labels = [batch["labels"][task_label][x] for x in batch["masks"][task_label]]
-                    # print(masked_labels, batch["masks"][task_label])
-                    if self.multi_task or self.ensemble:
-                        masked_labels = torch.tensor(masked_labels).type("torch.LongTensor").to(self.device)
-                    else:
-                        masked_labels = torch.tensor(masked_labels).to(self.device)
+                        masked_logits = logits[task_label][batch["masks"][task_label]]
+                        masked_labels = [batch["labels"][task_label][x] for x in batch["masks"][task_label]]
+                        # print(masked_labels, batch["masks"][task_label])
+                        if self.multi_task or self.ensemble:
+                            masked_labels = torch.tensor(masked_labels).type("torch.LongTensor").to(self.device)
+                        else:
+                            masked_labels = torch.tensor(masked_labels).to(self.device)
 
-                    if len(batch["masks"][task_label]) > 0:
-                        ## list of loss values for each batch instance
-                        class_loss[task_label] = self.loss[task_label](masked_logits, masked_labels)
+                        if len(batch["masks"][task_label]) > 0:
+                            ## list of loss values for each batch instance
+                            class_loss[task_label] = self.loss[task_label](masked_logits, masked_labels)
 
-                        ## using a column of the data as the weight for loss value of each instance
-                        # Batch["weight"] shows the instance weight (based on its certainty), class_weight shows the class weight for positive and negative labels
-                        # batch["weights"][batch_i] *
-                        """
-                        class_loss[task_label] = sum([ batch_loss[mask_i] * self.class_weight[task_label][masked_labels[mask_i]]
-                                                      for mask_i, batch_i in enumerate(batch["masks"][task_label])])
-                        weighted_sum += sum([self.class_weight[task_label][label] for label in masked_labels])
-                        """
-                total_loss = sum(class_loss.values())  # / weighted_sum
-                loss_val += total_loss.item()
-                total_loss.backward()
-                self.optimizer.step()
-                lr_scheduler.step()
-                progress_bar.update(1)
+                            ## using a column of the data as the weight for loss value of each instance
+                            # Batch["weight"] shows the instance weight (based on its certainty), class_weight shows the class weight for positive and negative labels
+                            # batch["weights"][batch_i] *
+                            """
+                            class_loss[task_label] = sum([ batch_loss[mask_i] * self.class_weight[task_label][masked_labels[mask_i]]
+                                                        for mask_i, batch_i in enumerate(batch["masks"][task_label])])
+                            weighted_sum += sum([self.class_weight[task_label][label] for label in masked_labels])
+                            """
+                    total_loss = sum(class_loss.values())  # / weighted_sum
+                    loss_val += total_loss.item()
+                    total_loss.backward()
+                    self.optimizer.step()
+                    
+                    training_progress_bar.advance(batch_task_id)
 
-            print("Epoch", epoch, "-", "Loss", round(loss_val, 3))
-            if val_batches:
-                val_results = self.predict(val_batches, self.model)
-                print("Validation")
-                print(self.report_results(val_results))
-        #   flag  
-        # lr_scheduler.step()
+                print("Epoch", epoch, "-", "Loss", round(loss_val, 3))
+                if val_batches:
+                    val_results = self.predict(val_batches, self.model)
+                    print("Validation")
+                    print(self.report_results(val_results))
+                
+                training_progress_bar.advance(task_id)
+                training_progress_bar.reset(batch_task_id)
+                
+            #   flag  
+            # lr_scheduler.step()
                 
     def predict(self, batches, model= None): 
         self.model.eval()
@@ -360,16 +365,19 @@ class ToxicityClassifier():
         
                     
         def extract_hard_soft(abuse_masked_label, abuse_masked_pred):
-            hard_eval, soft_labels = [], []
+            # hard_eval, 
+            soft_labels_targets, soft_labels_pred  = [], []
             for ind in abuse_masked_pred.index:
             
-                hard_eval.append(abuse_masked_label["hard_label"][ind])
-                soft_labels.append([abuse_masked_pred["soft_label_0"][ind],abuse_masked_pred["soft_label_1"][ind]])
+                # hard_eval.append(abuse_masked_label["hard_label"][ind])
+                soft_labels_targets.append([abuse_masked_label["soft_label_0"][ind],abuse_masked_label["soft_label_1"][ind]])
+                soft_labels_pred.append([abuse_masked_pred["soft_label_0"][ind],abuse_masked_pred["soft_label_1"][ind]])
 
-            hard_eval = np.asarray(hard_eval, dtype=np.int8)
-            hard_eval = np.expand_dims(hard_eval, axis=1)
-            soft_labels = np.asarray(soft_labels)
-            return hard_eval, soft_labels
+            # hard_eval = np.asarray(hard_eval, dtype=np.int8)
+            # hard_eval = np.expand_dims(hard_eval, axis=1)
+            soft_labels_targets = np.asarray(soft_labels_targets)
+            soft_labels_pred = np.asarray(soft_labels_pred)
+            return soft_labels_targets, soft_labels_pred
         
     
         def filter_na(df):
@@ -421,17 +429,17 @@ class ToxicityClassifier():
             label_cols = [col + "_label" for col in self.annotators]
             pred_cols = [col + "_pred" for col in self.annotators]
 
-            masked_label_cols = [col + "_masked_label" for col in self.annotators]
-            masked_pred_cols = [col + "_masked_pred" for col in self.annotators]
+            # masked_label_cols = [col + "_masked_label" for col in self.annotators]
+            # masked_pred_cols = [col + "_masked_pred" for col in self.annotators]
             
-            abuse_masked_label = filter_na(results[masked_label_cols])
-            abuse_masked_pred = filter_na(results[masked_pred_cols])
+            # abuse_masked_label = filter_na(results[masked_label_cols])
+            # abuse_masked_pred = filter_na(results[masked_pred_cols])
             
-            f1 = f1_score(abuse_masked_label["hard_label"], abuse_masked_pred["hard_label"], average = 'micro')
+            # f1 = f1_score(abuse_masked_label["hard_label"], abuse_masked_pred["hard_label"], average = 'micro')
 
-            hard_masked, soft_masked = extract_hard_soft(abuse_masked_label, abuse_masked_pred)
+            # hard_masked, soft_masked = extract_hard_soft(abuse_masked_label, abuse_masked_pred)
             
-            cr_ent = cross_entropy(hard_masked, soft_masked)
+            # cr_ent = cross_entropy(hard_masked, soft_masked)
             
         else:
             toxic_label = results["toxic_label"] == 1
@@ -444,15 +452,13 @@ class ToxicityClassifier():
         
         f1_unmasked = f1_score(abuse_unmasked_label["hard_label"], abuse_unmasked_pred["hard_label"], average = 'micro')
         
-        hard_unmasked, soft_unmasked = extract_hard_soft(abuse_unmasked_label, abuse_unmasked_pred)
+        soft_label_unmasked, soft_pred_unmasked = extract_hard_soft(abuse_unmasked_label, abuse_unmasked_pred)
             
-        # logloss = log_loss(hard_masked.flatten(), soft_masked, eps=1e-9)
-
-        cr_ent_unmasked = cross_entropy(hard_unmasked, soft_unmasked)
+        cr_ent_unmasked = cross_entropy(soft_label_unmasked, soft_pred_unmasked)
         
-        scores = {"F1 masked": round(f1, 4),
-                  "Cross entropy masked": round(cr_ent, 4),
-                  "F1 unmasked": round(f1_unmasked, 4),
+        # "F1 masked": round(f1, 4), "Cross entropy masked": round(cr_ent, 4),
+        
+        scores = {"F1 unmasked": round(f1_unmasked, 4),
                   "Cross entropy unmasked": round(cr_ent_unmasked, 4)}
 
         return scores
