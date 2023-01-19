@@ -27,7 +27,7 @@ training_progress_bar = Progress("{task.description}", BarColumn(), MofNComplete
 
 
 class ClassifierBert(nn.Module):
-    def __init__(self, device, tasks=["toxic"], labels=2):
+    def __init__(self, device, tasks=["abuse"], labels=2):
         super(ClassifierBert, self).__init__()
         self.bert = BertModel.from_pretrained("bert-base-uncased",
                                               return_dict=True)
@@ -54,7 +54,7 @@ class ClassifierBert(nn.Module):
     
 
         if self.labels > 2:
-            logits = {str(label): self.task_logits["toxic"][:, label] for label in range(self.labels)}
+            logits = {str(label): self.task_logits["abuse"][:, label] for label in range(self.labels)}
             sig_logits = {str(label): torch.sigmoid(logits[str(label)]) for label in range(self.labels)}
             predictions = {str(label): [1 if x > 0.5 else 0 for x in sig_logits[str(label)]] for label in
                            range(self.labels)}
@@ -69,13 +69,14 @@ class ClassifierBert(nn.Module):
 
 
 
-class ToxicityClassifier():
-    def __init__(self, data_train, data_test, annotators, params, task_labels=["toxic"]):
+class AbuseClassifier():
+    def __init__(self, data_train, data_dev, data_test, annotators, params, task_labels=["abuse"]):
         
         #if eng:
-        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
         self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
         self.data_train = data_train
+        self.data_dev = data_dev
         self.data_test = data_test
         self.annotators = annotators
         #if arab
@@ -91,7 +92,7 @@ class ToxicityClassifier():
         self.majority_vote()
         self.uncertainty()
         print("Train data shape after majority voting", self.data_train.shape)
-        print("Train data shape after majority voting", self.data_test.shape)
+        print("Train data shape after majority voting", self.data_dev.shape)
         
         # Setting the parameters
         self.params = params
@@ -100,8 +101,8 @@ class ToxicityClassifier():
     def majority_vote(self):
         self.data_train["abuse"] = (self.data_train[self.annotators].sum(axis=1) / \
                                     self.data_train[self.annotators].count(axis=1) >= 0.5).astype(int)
-        self.data_test["abuse"] = (self.data_test[self.annotators].sum(axis=1) / \
-                                    self.data_test[self.annotators].count(axis=1) >= 0.5).astype(int)
+        self.data_dev["abuse"] = (self.data_dev[self.annotators].sum(axis=1) / \
+                                    self.data_dev[self.annotators].count(axis=1) >= 0.5).astype(int)
 
     def uncertainty(self):
         self.data_train["uncertainty"] = (self.data_train[self.annotators].sum(axis=1) \
@@ -109,10 +110,10 @@ class ToxicityClassifier():
                     axis=1)) \
                                     / (self.data_train[self.annotators].count(axis=1) * self.data_train[self.annotators].count(
                     axis=1)))
-        self.data_test["uncertainty"] = (self.data_test[self.annotators].sum(axis=1) \
-                                    * (self.data_test[self.annotators].count(axis=1) - self.data_test[self.annotators].sum(
+        self.data_dev["uncertainty"] = (self.data_dev[self.annotators].sum(axis=1) \
+                                    * (self.data_dev[self.annotators].count(axis=1) - self.data_dev[self.annotators].sum(
                     axis=1)) \
-                                    / (self.data_test[self.annotators].count(axis=1) * self.data_test[self.annotators].count(
+                                    / (self.data_dev[self.annotators].count(axis=1) * self.data_dev[self.annotators].count(
                     axis=1)))
 
     def CV(self):
@@ -120,17 +121,17 @@ class ToxicityClassifier():
             ensemble_results = pd.DataFrame()
             for annotator in self.annotators:
                 print("Training model for annotator", annotator)
-                self.task_labels = ["toxic"]
-                scores, results = self._CV(self.data.rename(columns={annotator: "toxic", "toxic": "_toxic"}))
-                ensemble_results[annotator + "_pred"] = results["toxic_pred"]
-                ensemble_results[annotator + "_label"] = results["toxic_label"]
-                ensemble_results[annotator + "_masked_pred"] = results["toxic_masked_pred"]
-                ensemble_results[annotator + "_masked_label"] = results["toxic_masked_label"]
+                self.task_labels = ["abuse"]
+                scores, results = self._CV(self.data.rename(columns={annotator: "abuse", "abuse": "_abuse"}))
+                ensemble_results[annotator + "_pred"] = results["abuse_pred"]
+                ensemble_results[annotator + "_label"] = results["abuse_label"]
+                ensemble_results[annotator + "_masked_pred"] = results["abuse_masked_pred"]
+                ensemble_results[annotator + "_masked_label"] = results["abuse_masked_label"]
             self.task_labels = self.annotators
             scores = self.report_results(ensemble_results)
             return scores, ensemble_results
         else:
-            return self._CV(self.data_train, self.data_test)
+            return self._CV(self.data_train, self.data_dev, self.data_test)
 
     def masks(self, df):
         df = df.replace(0, 1)
@@ -138,7 +139,7 @@ class ToxicityClassifier():
         new_labels = LabelEncoder().fit_transform([''.join(str(l) for l in row) for i, row in df.iterrows()])
         return new_labels
 
-    def _CV(self, train, test):
+    def _CV(self, train, dev, test):
 
         results = pd.DataFrame()
         """
@@ -148,17 +149,23 @@ class ToxicityClassifier():
             test.to_csv(os.path.join(self.params.source_dir, "results", "GHC", "test_file.csv"), index=False, header=False, mode="a") #     results = results.
         """
         train_batches = self.get_batches(train)
+        dev_batches = self.get_batches(dev)
         test_batches = self.get_batches(test)
 
-        self.train_model(train_batches)
+        self.train_model(train_batches, dev_batches)
         if self.params.predict == "label":
             # testing on the validation set
-            results = self.predict(test_batches)
+            results_cluttered = self.predict(test_batches)
+            ann_pred_list = []
+            for x in range(len(self.annotators)):
+                ann_pred_list.append(self.annotators[x] + "_pred")
+
+            results = results_cluttered[ann_pred_list]   
             print("Test:")
             
-        scores = self.report_results(results)
-        print(scores)
-        return scores, results
+        # scores = self.report_results(results)
+        # print(scores)
+        return results
 
     def new_model(self):
         if self.multi_task:
@@ -193,24 +200,19 @@ class ToxicityClassifier():
 
         return losses
 
-    def train_model(self, batches):
+    def train_model(self, batches_train, batches_dev):
         self.model = self.new_model()
         self.model = self.model.to(self.device)
         
         self.optimizer = AdamW(self.model.parameters(), lr=self.params.learning_rate)
         
-        train_batches, val_batches = train_test_split(batches,
-                                                shuffle=True,
-                                                random_state=self.params.random_state,
-                                                test_size=.1)
+        train_batches = batches_train
+        val_batches = batches_dev
 
         
-        num_training_steps = self.params.num_epochs * len(train_batches)
+        # num_training_steps = self.params.num_epochs * len(train_batches)
         
         # lr_scheduler = get_scheduler(name="linear", optimizer=self.optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
-        
-        # progress_bar = tqdm(range(num_training_steps))
-
 
         self.loss = self.create_loss_functions()
         
@@ -267,13 +269,11 @@ class ToxicityClassifier():
                 if val_batches:
                     val_results = self.predict(val_batches, self.model)
                     print("Validation")
-                    print(self.report_results(val_results))
+                    self.report_results(val_results)
                 
                 training_progress_bar.advance(task_id)
                 training_progress_bar.reset(batch_task_id)
                 
-            #   flag  
-            # lr_scheduler.step()
                 
     def predict(self, batches, model= None): 
         self.model.eval()
@@ -429,21 +429,21 @@ class ToxicityClassifier():
             label_cols = [col + "_label" for col in self.annotators]
             pred_cols = [col + "_pred" for col in self.annotators]
 
-            # masked_label_cols = [col + "_masked_label" for col in self.annotators]
-            # masked_pred_cols = [col + "_masked_pred" for col in self.annotators]
+            masked_label_cols = [col + "_masked_label" for col in self.annotators]
+            masked_pred_cols = [col + "_masked_pred" for col in self.annotators]
             
-            # abuse_masked_label = filter_na(results[masked_label_cols])
-            # abuse_masked_pred = filter_na(results[masked_pred_cols])
+            abuse_masked_label = filter_na(results[masked_label_cols])
+            abuse_masked_pred = filter_na(results[masked_pred_cols])
             
-            # f1 = f1_score(abuse_masked_label["hard_label"], abuse_masked_pred["hard_label"], average = 'micro')
+            f1 = f1_score(abuse_masked_label["hard_label"], abuse_masked_pred["hard_label"], average = 'micro')
 
-            # hard_masked, soft_masked = extract_hard_soft(abuse_masked_label, abuse_masked_pred)
+            soft_label_masked, soft_pred_masked = extract_hard_soft(abuse_masked_label, abuse_masked_pred)
             
-            # cr_ent = cross_entropy(hard_masked, soft_masked)
+            cr_ent = cross_entropy(soft_label_masked, soft_pred_masked)
             
         else:
-            toxic_label = results["toxic_label"] == 1
-            toxic_pred = results["toxic_pred"] == 1
+            abuse_label = results["abuse_label"] == 1
+            abuse_pred = results["abuse_pred"] == 1
             print("Accuracy of single label")
 
 
@@ -458,7 +458,9 @@ class ToxicityClassifier():
         
         # "F1 masked": round(f1, 4), "Cross entropy masked": round(cr_ent, 4),
         
-        scores = {"F1 unmasked": round(f1_unmasked, 4),
+        scores = {"F1 masked": round(f1, 4),
+                  "Cross entropy masked": round(cr_ent, 4),
+                  "F1 unmasked": round(f1_unmasked, 4),
                   "Cross entropy unmasked": round(cr_ent_unmasked, 4)}
 
         return scores
@@ -483,7 +485,7 @@ class ToxicityClassifier():
             data_info["labels"] = anno_batch
             data_info["masks"] = mask_batch
 
-            #data_info["majority_vote"] = data["toxic"].tolist()[s: e]
+            #data_info["majority_vote"] = data["abuse"].tolist()[s: e]
             data_info["batch_len"] = e - s
             
             if isinstance(self.params.batch_weight, str):

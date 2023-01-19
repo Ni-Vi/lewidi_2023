@@ -1,12 +1,14 @@
-from classifier_lewidi import *
-from params_lewidi import *
-from DataManager import *
-
 import os
 import argparse
+import importlib
 from datetime import datetime
 import pytz
 import re
+import numpy as np
+
+from classifier_lewidi import *
+from params_lewidi import *
+from DataManager import *
 
 def main():
     
@@ -15,36 +17,70 @@ def main():
     filepath3 = '../data/HS-Brexit_dataset/'
     filepath4 = '../data/MD-Agreement_dataset/'
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
-    print(data)
     def_params = params_lewidi()
-    for key in data:
-        annotators = list(sorted(set(itertools.chain.from_iterable(data[key]['annotators'].str.findall("\w+")))))
+    train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
+    dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
+    test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
+    names = ["CONV-AI","ARABIC","BREXIT","MDDATASET"]
+    for i in range(len(train_dat)):
+        key_train = train_dat[i]
+        key_dev = dev_dat[i]
+        key_test = test_dat[i] 
+        if i == 3:
+            def_params.task = "single"
         print("-------------------------------------------------------------------------------------------------------") 
-        print("-----------------------------WE ARE IN THE", key, "DATASET---------------------------------------------")
+        print("-----------------------------WE ARE IN THE", names[i], "DATASET---------------------------------------------")
+
+        annotators = list(sorted(set(itertools.chain.from_iterable(data.dataset_groups[key_train]['annotators'].str.findall("\w+")))))
+
+        model = AbuseClassifier(data.dataset_groups[key_train], data.dataset_groups[key_dev], data.dataset_groups[key_test] , annotators=annotators, params=def_params)
+        results = model.CV()
+
+        comp_metrics = results
+        comp_metrics["soft_label_0"] = np.nan
+        comp_metrics["soft_label_1"] = np.nan
+        comp_metrics["hard_label"] = np.nan
+
+        for ind, row in results.iterrows():
+            
+            count_zero, count_one, totalcount = 0,0,0
+            for element in row:
+                if np.isnan(element):
+                    continue
+                elif element == 0:
+                    count_zero+= 1 
+                    totalcount +=1
+                else:
+                    count_one +=1
+                    totalcount +=1   
+                        
+            soft_zero, soft_one = count_zero / float(totalcount) , count_one / float(totalcount)
+
+            comp_metrics["soft_label_0"][ind] = soft_zero
+            comp_metrics["soft_label_1"][ind] = soft_one
+
+            if soft_zero > soft_one:
+                comp_metrics["hard_label"][ind] = 0
+            elif soft_zero < soft_one:
+                comp_metrics["hard_label"][ind] = 1
+            else:
+                comp_metrics["hard_label"][ind] = random.randrange(0, 2)
+                
+        comp_metrics = comp_metrics.loc[:,["hard_label","soft_label_0", "soft_label_1"]]
+        comp_metrics["hard_label"]= pd.to_numeric(comp_metrics["hard_label"], downcast="integer")
         
-        model = ToxicityClassifier(data, annotators=annotators, params=def_params)
-
-        score, results = model.CV()
-
-        score["params"] = ", ".join(key + ": " + str(val) for key, val in def_params.__dict__.items())
-        score["task"] = model.params.task
-
-        pacific = pytz.timezone('US/Pacific')
-        sa_time = datetime.now(pacific)
-        name_time = sa_time.strftime('%m%d%y-%H:%M')
-        score["time"] = name_time
-        print(score)
-
-        score_dir = os.path.join(def_params.source_dir, "results", "GHC", "classification.csv")
-        result_dir = os.path.join(def_params.source_dir, "results", "GHC", name_time + "_" + def_params.task + ".csv")
-        if os.path.exists(score_dir):
-            pd.DataFrame.from_records([score]).to_csv(score_dir, header=False,  index=False, mode="a")
-        else:
-            pd.DataFrame.from_records([score]).to_csv(score_dir, index=False)
-
-            pd.DataFrame.from_dict(results).to_csv(result_dir, index=False)
-        
-        print("---------------------------------------", key, "DATASET END--------------------------------------------")
+        if key_test == "conv_test":
+            results_filepath = "../data/results"
+            # "MD-Agreement_results.tsv", "ArMIS_results.tsv", "ConvAbuse_results.tsv", "HS-Brexit_results.tsv"
+            os.makedirs(results_filepath, exist_ok=True)  
+            comp_metrics.to_csv(results_filepath + "ConvAbuse_results.tsv", sep="\t", header = False,index=False)
+        elif key_test == "ar_test":
+            comp_metrics.to_csv(results_filepath + "ArMIS_results.tsv", sep="\t", header = False,index=False)
+        elif key_test == "br_test":
+            comp_metrics.to_csv(results_filepath + "HS-Brexit_results.tsv", sep="\t", header = False,index=False)
+        elif key_test == "md_test":
+            comp_metrics.to_csv(results_filepath + "MD-Agreement_results.tsv", sep="\t", header = False,index=False)
+        print("---------------------------------------", names[i], "DATASET END--------------------------------------------")
         print("-------------------------------------------------------------------------------------------------------")
             
 if __name__ == "__main__":

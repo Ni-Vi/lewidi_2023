@@ -14,17 +14,21 @@ class DataManager():
         self.dataset_groups= defaultdict(list)
         self.dataset_groups['conv_train'] = (self.open_file(filepathConv + 'ConvAbuse_train.json', 1))
         self.dataset_groups['conv_dev'] = (self.open_file(filepathConv + 'ConvAbuse_dev.json', 1))
+        self.dataset_groups['conv_test'] = (self.open_file(filepathConv + 'ConvAbuse_test.json', 1))
         
         self.dataset_groups['ar_train'] = (self.open_file(filepathArMis + 'ArMIS_train.json', 0))
         self.dataset_groups['ar_dev'] = (self.open_file(filepathArMis + 'ArMIS_dev.json', 0))
+        self.dataset_groups['ar_test'] = (self.open_file(filepathArMis + 'ArMIS_test.json', 0))
         
         #HS-Brexit
         self.dataset_groups['br_train'] = (self.open_file(filepathBrex + 'HS-Brexit_train.json', 0))
         self.dataset_groups['br_dev'] = (self.open_file(filepathBrex + 'HS-Brexit_dev.json', 0))
+        self.dataset_groups['br_test'] = (self.open_file(filepathBrex + 'HS-Brexit_test.json', 0))
         
         #MD
         self.dataset_groups['md_train'] = (self.open_file(filepathMD + 'MD-Agreement_train.json', 0))
         self.dataset_groups['md_dev'] = (self.open_file(filepathMD + 'MD-Agreement_dev.json', 0))
+        self.dataset_groups['md_test'] = (self.open_file(filepathMD + 'MD-Agreement_test.json', 0))
 
         for key in self.dataset_groups:
             if key == 'conv_dev':
@@ -35,18 +39,23 @@ class DataManager():
                 continue
     
         for key in self.dataset_groups:
-            self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
             print("I'm in with the", key, "dataset")
-            if key in ['conv_train','conv_dev']:
-                flag = 1
-            else:
-                flag = 0
-            
-            if (flag == 1):
+                    
+            self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
+                
+            if key not in ['md_train', 'md_dev', 'md_test']:
+                
+                conv_flag, test_flag = 0, 0
+                
+                if key in ['conv_train','conv_dev']:
+                    conv_flag = 1
+                elif key in  ['conv_test', 'ar_test', 'br_test']:
+                    test_flag = 1
+
                 self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
-                                self.annotation_annotator_split(self.dataset_groups[key], flag), 
-                                index=self.dataset_groups[key].index
-                                ))
+                                    self.annotation_annotator_split(self.dataset_groups[key], conv_flag, test_flag), 
+                                    index=self.dataset_groups[key].index
+                                    ))
         
     def open_file(self, files, flag):
         
@@ -75,7 +84,6 @@ class DataManager():
             d['annotators'].append(j["annotators"])
             d['soft_label_0'].append(j["soft_label"]['0'])
             d['soft_label_1'].append(j["soft_label"]['1'])
-            #d['hard_label'].append(int(j["hard_label"]))
             d['hard_label'].append(j["hard_label"])
 
         # Closing file
@@ -121,17 +129,18 @@ class DataManager():
                 
         return panda
     
-    def annotation_annotator_split(self, panda, flag):
+    def annotation_annotator_split(self, panda, conv_flag, test_flag):
         Ann_dict = defaultdict(list)
         annotators = list(sorted(set(itertools.chain.from_iterable(panda['annotators'].str.findall("\w+")))))
 
 
         for ind in panda.index:
-            annotations = [int(d) for d in re.findall(r'-?\d+', panda['annotations'][ind])]
+            if test_flag != 1:
+                annotations = [int(d) for d in re.findall(r'-?\d+', panda['annotations'][ind])]
 
             Ann_index=0;
             for person in annotators:
-                if person in panda["annotators"].str.findall("\w+")[ind]:
+                if person in panda["annotators"].str.findall("\w+")[ind] and test_flag !=1:
                     Ann_dict[person].append(annotations[Ann_index]) 
                     Ann_index=+1
                 else: 
@@ -139,10 +148,12 @@ class DataManager():
                     
         final = pd.DataFrame(Ann_dict)
         
-        if flag == 1:
+        if conv_flag == 1:
             vals_to_replace = {-3:1, -2:1, -2:1, -1:1, 0:0, 1:0, 'None': np.nan}
-            for k in final.keys():
-                final[k] = final[k].map(vals_to_replace)
-        
+        else:
+            vals_to_replace = {'None': np.nan}    
+        for k in final.keys():
+            final[k] = final[k].map(vals_to_replace)
+
         return final
         
