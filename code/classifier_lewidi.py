@@ -11,6 +11,8 @@ import torch
 import torch.nn as nn
 from torch.optim import AdamW
 from torch.nn import functional as F
+from transformers import AutoTokenizer, AutoModel
+from arabert.preprocess import ArabertPreprocessor
 from transformers import BertTokenizer, BertModel, BertConfig, get_scheduler
 from scipy.special import softmax
 from tqdm import tqdm, trange
@@ -27,8 +29,13 @@ training_progress_bar = Progress("{task.description}", BarColumn(), MofNComplete
 
 
 class ClassifierBert(nn.Module):
-    def __init__(self, device, tasks=["abuse"], labels=2):
+    def __init__(self, device, tasks=["abuse"], labels=2, flag):
         super(ClassifierBert, self).__init__()
+        # check = flag
+        # if self.params.ar_dat == 1:
+        #     self.bert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv2",
+        #                                       return_dict= True)
+        print(flag)
         self.bert = BertModel.from_pretrained("bert-base-uncased",
                                               return_dict=True)
 
@@ -74,13 +81,14 @@ class AbuseClassifier():
         
         #if eng:
         self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-        self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+        if params.ar_dat == 1:
+            self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
+        else:
+            self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
         self.data_train = data_train
         self.data_dev = data_dev
         self.data_test = data_test
         self.annotators = annotators
-        #if arab
-        #self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
 
         self.multi_label, self.multi_task, self.ensemble, self.single, self.log_reg = False, False, False, False, False
         setattr(self, params.task, True)
@@ -140,7 +148,7 @@ class AbuseClassifier():
         return new_labels
 
     def _CV(self, train, dev, test):
-
+        
         results = pd.DataFrame()
         """
         if i == 1:
@@ -169,13 +177,14 @@ class AbuseClassifier():
 
     def new_model(self):
         if self.multi_task:
-            return ClassifierBert(self.device, tasks=self.annotators)
+            print(self.params.ar_dat, "hello")
+            return ClassifierBert(self.device, tasks=self.annotators, self.params.ar_dat)
         elif self.multi_label:
-            return ClassifierBert(self.device, labels=len(self.annotators))
+            return ClassifierBert(self.device, labels=len(self.annotators), self.params.ar_dat)
         elif self.log_reg:
-            return ClassifierBert(self.device, labels=1, tasks=self.task_labels)
+            return ClassifierBert(self.device, labels=1, tasks=self.task_labels, self.params.ar_dat)
         else:
-            return ClassifierBert(self.device)
+            return ClassifierBert(self.device, self.params.ar_dat)
 
     def create_loss_functions(self):
         losses = dict()
@@ -269,7 +278,7 @@ class AbuseClassifier():
                 if val_batches:
                     val_results = self.predict(val_batches, self.model)
                     print("Validation")
-                    self.report_results(val_results)
+                    print(self.report_results(val_results))
                 
                 training_progress_bar.advance(task_id)
                 training_progress_bar.reset(batch_task_id)

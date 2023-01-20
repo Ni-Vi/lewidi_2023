@@ -5,18 +5,17 @@ import torch
 
 class params_lewidi():
     def __init__(self):
-        self.batch_size = 4
+        self.batch_size = 64
         self.learning_rate =  1e-7
         self.max_len = 128
-        self.num_epochs = 15
+        self.num_epochs = 1
         self.random_state = 9999
-        self.num_folds = 2
         self.task = "multi_task"
         self.batch_weight = None
         self.sort_by = None
-        self.stratified = True
         self.predict = "label"
         self.mc_passes = 10
+        self.ar_dat = 0
         self.set_seed()
         
     def update(self, new):
