@@ -43,24 +43,42 @@ class DataManager():
                     
             self.dataset_groups[key]["hard_label"] = pd.to_numeric(self.dataset_groups[key]["hard_label"], downcast="integer")
                 
+            conv_flag, test_flag, md_flag = 0, 0, 0
+
+            
             if key not in ['md_train', 'md_dev', 'md_test']:
                 
-                conv_flag, test_flag = 0, 0
-                
+                md_ann = []
                 if key in ['conv_train','conv_dev']:
                     conv_flag = 1
                 elif key in  ['conv_test', 'ar_test', 'br_test']:
                     test_flag = 1
+                
+                
+                
+            else: 
+                
+                md_flag = 1
+                if key != 'md_test':
+                    md_ann = []
+                    test_flag == 0
+                    for ind, row in self.dataset_groups[key]['annotations'].items():
+                        self.dataset_groups[key]['annotations'][ind] = [int(d) for d in re.findall(r'-?\d+', row)]
+                    max_len = max(self.dataset_groups[key]['annotations'].str.len())
+                    md_ann = ["Ann" + str(i) for i in range(1, max_len+1)]
 
-                self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
-                                    self.annotation_annotator_split(self.dataset_groups[key], conv_flag, test_flag), 
-                                    index=self.dataset_groups[key].index))
                 
-            if key == 'md_test':
-                self.dataset_groups[key]['abuse'] = np.nan
+                else:
+                    test_flag = 1
+                    
+            self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
+                            self.annotation_annotator_split(self.dataset_groups[key], conv_flag, test_flag, md_flag, md_ann), 
+                            index=self.dataset_groups[key].index))
+
                 
                 
-        
+                
+                        
     def open_file(self, files, flag):
         
 
@@ -133,19 +151,30 @@ class DataManager():
                 
         return panda
     
-    def annotation_annotator_split(self, panda, conv_flag, test_flag):
+    def annotation_annotator_split(self, panda, conv_flag, test_flag, md_flag, md_ann):
         Ann_dict = defaultdict(list)
-        annotators = list(sorted(set(itertools.chain.from_iterable(panda['annotators'].str.findall("\w+")))))
-
-
+        
+        if md_flag == 0:
+            annotators = list(sorted(set(itertools.chain.from_iterable(panda['annotators'].str.findall("\w+")))))
+        else:
+            annotators = md_ann
+                        
         for ind in panda.index:
             if test_flag != 1:
-                annotations = [int(d) for d in re.findall(r'-?\d+', panda['annotations'][ind])]
-
+                if md_flag == 0:
+                    annotations = [int(d) for d in re.findall(r'-?\d+', panda['annotations'][ind])]
+                else:
+                    annotations = panda['annotations'][ind]
             Ann_index=0
         
             for person in annotators:
-                if person in panda["annotators"].str.findall("\w+")[ind] and test_flag !=1:
+                if md_flag ==0 and test_flag == 0:
+                    if person in panda["annotators"].str.findall("\w+")[ind]:
+                        Ann_dict[person].append(annotations[Ann_index]) 
+                        Ann_index=+1
+                    else:
+                        Ann_dict[person].append("None")
+                elif md_flag ==1 and test_flag ==0:
                     Ann_dict[person].append(annotations[Ann_index]) 
                     Ann_index=+1
                 else: 

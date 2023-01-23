@@ -219,7 +219,6 @@ class AbuseClassifier():
         # lr_scheduler = get_scheduler(name="linear", optimizer=self.optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
 
         self.loss = self.create_loss_functions()
-        scores = pd.DataFrame()
         with training_progress_bar: 
             task_id = training_progress_bar.add_task("Training", total=self.params.num_epochs)
             batch_task_id = training_progress_bar.add_task("Training batch", total=len(train_batches))
@@ -449,14 +448,15 @@ class AbuseClassifier():
             
             cr_ent = cross_entropy(soft_label_masked, soft_pred_masked)
             
+            abuse_label = filter_na(results[label_cols])
+            abuse_pred = filter_na(results[pred_cols])
+            
         else:
-            abuse_label = results["abuse_label"] == 1
-            abuse_pred = results["abuse_pred"] == 1
-            print("Accuracy of single label")
 
+            abuse_label = results["abuse_label"] 
+            abuse_pred = results["abuse_pred"] 
+            print("Accuracy of aggregated label")
 
-        abuse_label = filter_na(results[label_cols])
-        abuse_pred = filter_na(results[pred_cols])
         
         f1_unmasked = f1_score(abuse_label["hard_label"], abuse_pred["hard_label"], average = 'micro')
         

@@ -8,7 +8,7 @@ class params_lewidi():
         self.batch_size = 16
         self.learning_rate =  1e-7
         self.max_len = 128
-        self.num_epochs = 2
+        self.num_epochs = 20
         self.random_state = 9999
         self.task = "multi_task"
         self.batch_weight = None

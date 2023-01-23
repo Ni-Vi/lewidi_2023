@@ -7,19 +7,16 @@ from DataManager import *
 
 def main():
     
-    filepath1 = '../data/ConvAbuse_dataset/'
-    filepath2 = '../data/ArMIS_dataset/'
-    filepath3 = '../data/HS-Brexit_dataset/'
-    filepath4 = '../data/MD-Agreement_dataset/'
+    filepath1 = './data/ConvAbuse_dataset/'
+    filepath2 = './data/ArMIS_dataset/'
+    filepath3 = './data/HS-Brexit_dataset/'
+    filepath4 = './data/MD-Agreement_dataset/'
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
     def_params = params_lewidi()
-    # train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
-    # dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
-    # test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
-    
-    train_dat = ["md_train"]
-    dev_dat = ["md_dev"]
-    test_dat = ["md_test"]
+    train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
+    dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
+    test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
+
     
     names = ["CONV-AI","ARABIC","BREXIT","MDDATASET"]
     for i in range(len(train_dat)):
@@ -28,14 +25,16 @@ def main():
         key_test = test_dat[i] 
         if key_train == "ar_train":
             def_params.ar_dat = 1
-        elif key_train == "md_train":
-            def_params.task = "single"
+        # elif key_train == "md_train":
+        #     def_params.task = "single"
 
         print("-------------------------------------------------------------------------------------------------------") 
         print("-----------------------------WE ARE IN THE", names[i], "DATASET---------------------------------------------")
-
-        annotators = list(sorted(set(itertools.chain.from_iterable(data.dataset_groups[key_train]['annotators'].str.findall("\w+")))))
-
+        if key_train != "md_train":
+            annotators = list(sorted(set(itertools.chain.from_iterable(data.dataset_groups[key_train]['annotators'].str.findall("\w+")))))
+        else:
+            annotators = [x for x in list(data.dataset_groups[key_train].columns.values) if x.startswith('Ann')]
+            
         model = AbuseClassifier(data.dataset_groups[key_train], data.dataset_groups[key_dev], data.dataset_groups[key_test] , annotators=annotators, params=def_params)
         results = model.CV()
 
