@@ -54,8 +54,12 @@ class DataManager():
 
                 self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
                                     self.annotation_annotator_split(self.dataset_groups[key], conv_flag, test_flag), 
-                                    index=self.dataset_groups[key].index
-                                    ))
+                                    index=self.dataset_groups[key].index))
+                
+            if key == 'md_test':
+                self.dataset_groups[key]['abuse'] = np.nan
+                
+                
         
     def open_file(self, files, flag):
         
@@ -138,7 +142,8 @@ class DataManager():
             if test_flag != 1:
                 annotations = [int(d) for d in re.findall(r'-?\d+', panda['annotations'][ind])]
 
-            Ann_index=0;
+            Ann_index=0
+        
             for person in annotators:
                 if person in panda["annotators"].str.findall("\w+")[ind] and test_flag !=1:
                     Ann_dict[person].append(annotations[Ann_index]) 
@@ -151,7 +156,7 @@ class DataManager():
         if conv_flag == 1:
             vals_to_replace = {-3:1, -2:1, -2:1, -1:1, 0:0, 1:0, 'None': np.nan}
         else:
-            vals_to_replace = {'None': np.nan}    
+            vals_to_replace = {1:1, 0:0, 'None': np.nan}    
         for k in final.keys():
             final[k] = final[k].map(vals_to_replace)
 

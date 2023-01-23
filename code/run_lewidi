@@ -1,9 +1,4 @@
 import os
-import argparse
-import importlib
-from datetime import datetime
-import pytz
-import re
 import numpy as np
 
 from classifier_lewidi import *
@@ -18,16 +13,24 @@ def main():
     filepath4 = '../data/MD-Agreement_dataset/'
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
     def_params = params_lewidi()
-    train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
-    dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
-    test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
+    # train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
+    # dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
+    # test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
+    
+    train_dat = ["md_train"]
+    dev_dat = ["md_dev"]
+    test_dat = ["md_test"]
+    
     names = ["CONV-AI","ARABIC","BREXIT","MDDATASET"]
     for i in range(len(train_dat)):
         key_train = train_dat[i]
         key_dev = dev_dat[i]
         key_test = test_dat[i] 
-        if i == 3:
+        if key_train == "ar_train":
+            def_params.ar_dat = 1
+        elif key_train == "md_train":
             def_params.task = "single"
+
         print("-------------------------------------------------------------------------------------------------------") 
         print("-----------------------------WE ARE IN THE", names[i], "DATASET---------------------------------------------")
 
@@ -68,11 +71,9 @@ def main():
                 
         comp_metrics = comp_metrics.loc[:,["hard_label","soft_label_0", "soft_label_1"]]
         comp_metrics["hard_label"]= pd.to_numeric(comp_metrics["hard_label"], downcast="integer")
-        
+        results_filepath = "../data/results/"
+        os.makedirs(results_filepath, exist_ok=True) 
         if key_test == "conv_test":
-            results_filepath = "../data/results"
-            # "MD-Agreement_results.tsv", "ArMIS_results.tsv", "ConvAbuse_results.tsv", "HS-Brexit_results.tsv"
-            os.makedirs(results_filepath, exist_ok=True)  
             comp_metrics.to_csv(results_filepath + "ConvAbuse_results.tsv", sep="\t", header = False,index=False)
         elif key_test == "ar_test":
             comp_metrics.to_csv(results_filepath + "ArMIS_results.tsv", sep="\t", header = False,index=False)

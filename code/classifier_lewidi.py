@@ -29,14 +29,14 @@ training_progress_bar = Progress("{task.description}", BarColumn(), MofNComplete
 
 
 class ClassifierBert(nn.Module):
-    def __init__(self, device, tasks=["abuse"], labels=2, flag):
+    def __init__(self, device, tasks=["abuse"], labels=2, flag = 0):
         super(ClassifierBert, self).__init__()
-        # check = flag
-        # if self.params.ar_dat == 1:
-        #     self.bert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv2",
-        #                                       return_dict= True)
-        print(flag)
-        self.bert = BertModel.from_pretrained("bert-base-uncased",
+
+        if flag == 1:
+            self.bert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv2",
+                                              return_dict= True)
+        else:
+            self.bert = BertModel.from_pretrained("bert-base-uncased",
                                               return_dict=True)
 
         self.tasks = tasks
@@ -98,7 +98,7 @@ class AbuseClassifier():
             self.task_labels = annotators
 
         self.majority_vote()
-        self.uncertainty()
+        # self.uncertainty()
         print("Train data shape after majority voting", self.data_train.shape)
         print("Train data shape after majority voting", self.data_dev.shape)
         
@@ -107,29 +107,27 @@ class AbuseClassifier():
         print([(k, v) for k, v in self.params.__dict__.items()])
 
     def majority_vote(self):
-        self.data_train["abuse"] = (self.data_train[self.annotators].sum(axis=1) / \
-                                    self.data_train[self.annotators].count(axis=1) >= 0.5).astype(int)
-        self.data_dev["abuse"] = (self.data_dev[self.annotators].sum(axis=1) / \
-                                    self.data_dev[self.annotators].count(axis=1) >= 0.5).astype(int)
+        self.data_train["abuse"] = self.data_train['hard_label']
+        self.data_dev["abuse"] = self.data_dev['hard_label']
 
-    def uncertainty(self):
-        self.data_train["uncertainty"] = (self.data_train[self.annotators].sum(axis=1) \
-                                    * (self.data_train[self.annotators].count(axis=1) - self.data_train[self.annotators].sum(
-                    axis=1)) \
-                                    / (self.data_train[self.annotators].count(axis=1) * self.data_train[self.annotators].count(
-                    axis=1)))
-        self.data_dev["uncertainty"] = (self.data_dev[self.annotators].sum(axis=1) \
-                                    * (self.data_dev[self.annotators].count(axis=1) - self.data_dev[self.annotators].sum(
-                    axis=1)) \
-                                    / (self.data_dev[self.annotators].count(axis=1) * self.data_dev[self.annotators].count(
-                    axis=1)))
+    # def uncertainty(self):
+    #     self.data_train["uncertainty"] = (self.data_train[self.annotators].sum(axis=1) \
+    #                                 * (self.data_train[self.annotators].count(axis=1) - self.data_train[self.annotators].sum(
+    #                 axis=1)) \
+    #                                 / (self.data_train[self.annotators].count(axis=1) * self.data_train[self.annotators].count(
+    #                 axis=1)))
+    #     self.data_dev["uncertainty"] = (self.data_dev[self.annotators].sum(axis=1) \
+    #                                 * (self.data_dev[self.annotators].count(axis=1) - self.data_dev[self.annotators].sum(
+    #                 axis=1)) \
+    #                                 / (self.data_dev[self.annotators].count(axis=1) * self.data_dev[self.annotators].count(
+    #                 axis=1)))
 
     def CV(self):
         if self.ensemble:
             ensemble_results = pd.DataFrame()
             for annotator in self.annotators:
                 print("Training model for annotator", annotator)
-                self.task_labels = ["abuse"]
+                self.task_labels = "abuse"
                 scores, results = self._CV(self.data.rename(columns={annotator: "abuse", "abuse": "_abuse"}))
                 ensemble_results[annotator + "_pred"] = results["abuse_pred"]
                 ensemble_results[annotator + "_label"] = results["abuse_label"]
@@ -171,20 +169,17 @@ class AbuseClassifier():
             results = results_cluttered[ann_pred_list]   
             print("Test:")
             
-        # scores = self.report_results(results)
-        # print(scores)
         return results
 
     def new_model(self):
         if self.multi_task:
-            print(self.params.ar_dat, "hello")
-            return ClassifierBert(self.device, tasks=self.annotators, self.params.ar_dat)
+            return ClassifierBert(self.device, tasks=self.annotators, flag = self.params.ar_dat)
         elif self.multi_label:
-            return ClassifierBert(self.device, labels=len(self.annotators), self.params.ar_dat)
+            return ClassifierBert(self.device, labels=len(self.annotators), flag = self.params.ar_dat)
         elif self.log_reg:
-            return ClassifierBert(self.device, labels=1, tasks=self.task_labels, self.params.ar_dat)
+            return ClassifierBert(self.device, labels=1, tasks=self.task_labels, flag = self.params.ar_dat)
         else:
-            return ClassifierBert(self.device, self.params.ar_dat)
+            return ClassifierBert(self.device, flag = self.params.ar_dat)
 
     def create_loss_functions(self):
         losses = dict()
@@ -224,7 +219,7 @@ class AbuseClassifier():
         # lr_scheduler = get_scheduler(name="linear", optimizer=self.optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
 
         self.loss = self.create_loss_functions()
-        
+        scores = pd.DataFrame()
         with training_progress_bar: 
             task_id = training_progress_bar.add_task("Training", total=self.params.num_epochs)
             batch_task_id = training_progress_bar.add_task("Training batch", total=len(train_batches))
@@ -278,10 +273,14 @@ class AbuseClassifier():
                 if val_batches:
                     val_results = self.predict(val_batches, self.model)
                     print("Validation")
-                    print(self.report_results(val_results))
+                    val_score = self.report_results(val_results)
+                    print(val_score)
+                
                 
                 training_progress_bar.advance(task_id)
                 training_progress_bar.reset(batch_task_id)
+                
+
                 
                 
     def predict(self, batches, model= None): 
@@ -456,14 +455,14 @@ class AbuseClassifier():
             print("Accuracy of single label")
 
 
-        abuse_unmasked_label = filter_na(results[label_cols])
-        abuse_unmasked_pred = filter_na(results[pred_cols])
+        abuse_label = filter_na(results[label_cols])
+        abuse_pred = filter_na(results[pred_cols])
         
-        f1_unmasked = f1_score(abuse_unmasked_label["hard_label"], abuse_unmasked_pred["hard_label"], average = 'micro')
+        f1_unmasked = f1_score(abuse_label["hard_label"], abuse_pred["hard_label"], average = 'micro')
         
-        soft_label_unmasked, soft_pred_unmasked = extract_hard_soft(abuse_unmasked_label, abuse_unmasked_pred)
+        soft_label, soft_pred = extract_hard_soft(abuse_label, abuse_pred)
             
-        cr_ent_unmasked = cross_entropy(soft_label_unmasked, soft_pred_unmasked)
+        cr_ent_unmasked = cross_entropy(soft_label, soft_pred)
         
         # "F1 masked": round(f1, 4), "Cross entropy masked": round(cr_ent, 4),
         
