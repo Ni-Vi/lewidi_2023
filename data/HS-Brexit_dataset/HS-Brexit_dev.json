@@ -6,10 +6,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -29,10 +29,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -52,10 +52,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -75,10 +75,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -98,10 +98,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -121,10 +121,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -144,10 +144,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -167,10 +167,10 @@
         "annotations": "0,0,0,0,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -190,10 +190,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -213,10 +213,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -236,10 +236,10 @@
         "annotations": "0,0,1,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.33,
+            "1": 0.67
         },
         "split": "dev",
         "other_info": {
@@ -259,10 +259,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -282,10 +282,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -305,10 +305,10 @@
         "annotations": "0,0,0,0,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -328,10 +328,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -351,10 +351,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -374,10 +374,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -397,10 +397,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -420,10 +420,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -443,10 +443,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -466,10 +466,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -489,10 +489,10 @@
         "annotations": "0,0,1,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -512,10 +512,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -535,10 +535,10 @@
         "annotations": "0,0,0,1,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -558,10 +558,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -581,10 +581,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -604,10 +604,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -627,10 +627,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -650,10 +650,10 @@
         "annotations": "1,0,1,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.17,
+            "1": 0.83
         },
         "split": "dev",
         "other_info": {
@@ -673,10 +673,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -696,10 +696,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -719,10 +719,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -742,10 +742,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -765,10 +765,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -788,10 +788,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -811,10 +811,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -834,10 +834,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -857,10 +857,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -880,10 +880,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -903,10 +903,10 @@
         "annotations": "0,0,0,1,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -926,10 +926,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -949,10 +949,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -972,10 +972,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -995,10 +995,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1018,10 +1018,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1041,10 +1041,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1064,10 +1064,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1087,10 +1087,10 @@
         "annotations": "0,0,0,1,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -1110,10 +1110,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -1133,10 +1133,10 @@
         "annotations": "1,1,1,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.0,
+            "1": 1.0
         },
         "split": "dev",
         "other_info": {
@@ -1156,10 +1156,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1179,10 +1179,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1202,10 +1202,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -1225,10 +1225,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1248,10 +1248,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1271,10 +1271,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1294,10 +1294,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1317,10 +1317,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1340,10 +1340,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1363,10 +1363,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1386,10 +1386,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1409,10 +1409,10 @@
         "annotations": "0,0,1,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.33,
+            "1": 0.67
         },
         "split": "dev",
         "other_info": {
@@ -1432,10 +1432,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1455,10 +1455,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1478,10 +1478,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1501,10 +1501,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1524,10 +1524,10 @@
         "annotations": "0,0,0,1,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -1547,10 +1547,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -1570,10 +1570,10 @@
         "annotations": "0,0,0,0,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -1593,10 +1593,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -1616,10 +1616,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1639,10 +1639,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1662,10 +1662,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -1685,10 +1685,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -1708,10 +1708,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1731,10 +1731,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1754,10 +1754,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1777,10 +1777,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1800,10 +1800,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1823,10 +1823,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1846,10 +1846,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1869,10 +1869,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1892,10 +1892,10 @@
         "annotations": "1,0,1,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.33,
+            "1": 0.67
         },
         "split": "dev",
         "other_info": {
@@ -1915,10 +1915,10 @@
         "annotations": "1,1,1,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.33,
+            "1": 0.67
         },
         "split": "dev",
         "other_info": {
@@ -1938,10 +1938,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -1961,10 +1961,10 @@
         "annotations": "0,0,0,1,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -1984,10 +1984,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2007,10 +2007,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -2030,10 +2030,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2053,10 +2053,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2076,10 +2076,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2099,10 +2099,10 @@
         "annotations": "0,0,1,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -2122,10 +2122,10 @@
         "annotations": "0,0,0,1,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -2145,10 +2145,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2168,10 +2168,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2191,10 +2191,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2214,10 +2214,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2237,10 +2237,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2260,10 +2260,10 @@
         "annotations": "1,1,1,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.0,
+            "1": 1.0
         },
         "split": "dev",
         "other_info": {
@@ -2283,10 +2283,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2306,10 +2306,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2329,10 +2329,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2352,10 +2352,10 @@
         "annotations": "0,0,0,0,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -2375,10 +2375,10 @@
         "annotations": "0,0,0,1,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -2398,10 +2398,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2421,10 +2421,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2444,10 +2444,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -2467,10 +2467,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2490,10 +2490,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2513,10 +2513,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2536,10 +2536,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2559,10 +2559,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2582,10 +2582,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2605,10 +2605,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2628,10 +2628,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2651,10 +2651,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2674,10 +2674,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2697,10 +2697,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -2720,10 +2720,10 @@
         "annotations": "0,1,1,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.17,
+            "1": 0.83
         },
         "split": "dev",
         "other_info": {
@@ -2743,10 +2743,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2766,10 +2766,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2789,10 +2789,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2812,10 +2812,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2835,10 +2835,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2858,10 +2858,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2881,10 +2881,10 @@
         "annotations": "0,1,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.33,
+            "1": 0.67
         },
         "split": "dev",
         "other_info": {
@@ -2904,10 +2904,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2927,10 +2927,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2950,10 +2950,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -2973,10 +2973,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -2996,10 +2996,10 @@
         "annotations": "0,0,0,0,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -3019,10 +3019,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3042,10 +3042,10 @@
         "annotations": "1,1,1,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.17,
+            "1": 0.83
         },
         "split": "dev",
         "other_info": {
@@ -3065,10 +3065,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3088,10 +3088,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3111,10 +3111,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -3134,10 +3134,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -3157,10 +3157,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -3180,10 +3180,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3203,10 +3203,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3226,10 +3226,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -3249,10 +3249,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3272,10 +3272,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3295,10 +3295,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3318,10 +3318,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3341,10 +3341,10 @@
         "annotations": "0,1,0,1,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -3364,10 +3364,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3387,10 +3387,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -3410,10 +3410,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3433,10 +3433,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3456,10 +3456,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3479,10 +3479,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3502,10 +3502,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -3525,10 +3525,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3548,10 +3548,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3571,10 +3571,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3594,10 +3594,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3617,10 +3617,10 @@
         "annotations": "0,0,0,0,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.83,
+            "1": 0.17
         },
         "split": "dev",
         "other_info": {
@@ -3640,10 +3640,10 @@
         "annotations": "0,0,0,1,1,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "1",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -3663,10 +3663,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3686,10 +3686,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3709,10 +3709,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3732,10 +3732,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3755,10 +3755,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3778,10 +3778,10 @@
         "annotations": "0,1,0,1,0,1",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.5,
+            "1": 0.5
         },
         "split": "dev",
         "other_info": {
@@ -3801,10 +3801,10 @@
         "annotations": "0,0,0,1,1,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 0.67,
+            "1": 0.33
         },
         "split": "dev",
         "other_info": {
@@ -3824,10 +3824,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
@@ -3847,10 +3847,10 @@
         "annotations": "0,0,0,0,0,0",
         "annotators": "Ann1,Ann2,Ann3,Ann4,Ann5,Ann6",
         "lang": "en",
-        "hard_label": NaN,
+        "hard_label": "0",
         "soft_label": {
-            "0": NaN,
-            "1": NaN
+            "0": 1.0,
+            "1": 0.0
         },
         "split": "dev",
         "other_info": {
