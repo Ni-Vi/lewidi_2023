@@ -7,16 +7,16 @@ from DataManager import *
 
 def main():
     
-    filepath1 = './data/ConvAbuse_dataset/'
-    filepath2 = './data/ArMIS_dataset/'
-    filepath3 = './data/HS-Brexit_dataset/'
-    filepath4 = './data/MD-Agreement_dataset/'
+    filepath1 = '../data/ConvAbuse_dataset/'
+    filepath2 = '../data/ArMIS_dataset/'
+    filepath3 = '../data/HS-Brexit_dataset/'
+    filepath4 = '../data/MD-Agreement_dataset/'
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
     def_params = params_lewidi()
-    train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
-    dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
-    test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
-
+    train_dat = ["conv_train", "ar_train", "br_train"]
+    dev_dat = ["conv_dev", "ar_dev", "br_dev"]
+    test_dat = ["conv_test", "ar_test", "br_test"]
+    # ["md_train", "md_dev", "md_test"]
     
     names = ["CONV-AI","ARABIC","BREXIT","MDDATASET"]
     for i in range(len(train_dat)):
