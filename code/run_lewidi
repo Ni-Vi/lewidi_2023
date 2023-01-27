@@ -14,13 +14,13 @@ def main():
 
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
     def_params = params_lewidi()
-    # train_dat = ["conv_train", "ar_train", "br_train, "md_train"]
-    # dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
-    # test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
-    # [, , ]
-    train_dat = ["md_train"]
-    dev_dat = ["md_dev"]
-    test_dat = ["md_test"]
+    train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
+    dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
+    test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
+    # # [, , ]
+    # train_dat = ["md_train"]
+    # dev_dat = ["md_dev"]
+    # test_dat = ["md_test"]
     
     names = ["CONV-AI","ARABIC","BREXIT","MDDATASET"]
     for i in range(len(train_dat)):
