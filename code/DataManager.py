@@ -74,11 +74,9 @@ class DataManager():
             self.dataset_groups[key] = self.dataset_groups[key].join(pd.DataFrame(
                             self.annotation_annotator_split(self.dataset_groups[key], conv_flag, test_flag, md_flag, md_ann), 
                             index=self.dataset_groups[key].index))
+        if key == 'md_test':
+            self.dataset_groups[key]['abuse'] = np.nan
 
-                
-                
-                
-                        
     def open_file(self, files, flag):
         
 

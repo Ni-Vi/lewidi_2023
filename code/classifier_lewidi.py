@@ -79,17 +79,24 @@ class ClassifierBert(nn.Module):
 class AbuseClassifier():
     def __init__(self, data_train, data_dev, data_test, annotators, params, task_labels=["abuse"]):
         
-        #if eng:
+        #if eng: torch.device("cuda:0") if torch.cuda.is_available() else 
         self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-        if params.ar_dat == 1:
-            self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
-        else:
-            self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+
         self.data_train = data_train
         self.data_dev = data_dev
         self.data_test = data_test
         self.annotators = annotators
-
+        
+        if params.ar_dat == 1:
+            self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
+            model_name = "aubmindlab/bert-base-arabertv2"
+            arabert_prep = ArabertPreprocessor(model_name=model_name)
+            self.data_train["text"] =  self.data_train["text"].map(lambda a: arabert_prep.preprocess(a))
+            self.data_dev["text"] =  self.data_dev["text"].map(lambda a: arabert_prep.preprocess(a))
+            self.data_test["text"] =  self.data_test["text"].map(lambda a: arabert_prep.preprocess(a))
+        else:
+            self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+            
         self.multi_label, self.multi_task, self.ensemble, self.single, self.log_reg = False, False, False, False, False
         setattr(self, params.task, True)
         if self.single or self.log_reg:
@@ -160,13 +167,26 @@ class AbuseClassifier():
 
         self.train_model(train_batches, dev_batches)
         if self.params.predict == "label":
-            # testing on the validation set
-            results_cluttered = self.predict(test_batches)
-            ann_pred_list = []
-            for x in range(len(self.annotators)):
-                ann_pred_list.append(self.annotators[x] + "_pred")
+            
+            if len(self.task_labels) > 1:
+                results_cluttered = self.predict(test_batches)
+                ann_pred_list = []
+                for x in range(len(self.annotators)):
+                    ann_pred_list.append(self.annotators[x] + "_pred")
 
-            results = results_cluttered[ann_pred_list]   
+                results = results_cluttered[ann_pred_list]   
+                
+            else:
+                results_cluttered = self.predict(test_batches)
+                results = pd.DataFrame()
+                results["hard_label"] = results_cluttered["abuse_pred"]
+                results["soft_label_0"] = results_cluttered["abuse_logit"].str[0]
+                results["soft_label_1"] = results_cluttered["abuse_logit"].str[1]
+                
+                
+            # testing on the validation set
+            # if 
+
             print("Test:")
             
         return results
@@ -314,11 +334,13 @@ class AbuseClassifier():
                 results[task_label + "_masked_label"].extend(masked_labels)
                 results[task_label + "_pred"].extend(predictions[task_label])
                 results[task_label + "_label"].extend(batch["labels"][task_label])
-                
+
                 
                 if self.params.task == "single":
                     results[task_label + "_logit"].extend(
-                        softmax(logits[task_label].cpu().detach().numpy(), axis=1)[:, 1])        
+                        softmax(logits[task_label].cpu().detach().numpy(), axis=1)) # [:, 1]
+                    results[task_label +"_soft_label_0"]= (batch["soft_label_0"])
+                    results[task_label +"_soft_label_1"]= (batch["soft_label_1"])          
 
             
                 
@@ -458,9 +480,23 @@ class AbuseClassifier():
             print("Accuracy of aggregated label")
 
         
-        f1_unmasked = f1_score(abuse_label["hard_label"], abuse_pred["hard_label"], average = 'micro')
         
-        soft_label, soft_pred = extract_hard_soft(abuse_label, abuse_pred)
+        
+        if len(self.task_labels) == 1:
+            soft_label, soft_pred = [], []
+            for ind in results.index:
+               soft_label.append([results["abuse_soft_label_0"][ind],results["abuse_soft_label_1"][ind]])
+               soft_pred.append([results["abuse_logit"][ind][0],results["abuse_logit"][ind][1]])
+            
+            soft_label = np.asarray(soft_label)
+            soft_pred = np.asarray(soft_pred)
+            f1_unmasked = f1_score(results["abuse_label"], results["abuse_pred"], average = 'micro')
+            f1 = 0
+            cr_ent = 0
+            
+        else:
+            soft_label, soft_pred = extract_hard_soft(abuse_label, abuse_pred)
+            f1_unmasked = f1_score(abuse_label["hard_label"], abuse_pred["hard_label"], average = 'micro')
             
         cr_ent_unmasked = cross_entropy(soft_label, soft_pred)
         
@@ -492,7 +528,8 @@ class AbuseClassifier():
                                           if not math.isnan(h)]
             data_info["labels"] = anno_batch
             data_info["masks"] = mask_batch
-
+            data_info["soft_label_0"] = data["soft_label_0"]
+            data_info["soft_label_1"] = data["soft_label_1"]
             #data_info["majority_vote"] = data["abuse"].tolist()[s: e]
             data_info["batch_len"] = e - s
             
