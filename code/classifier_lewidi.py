@@ -27,14 +27,37 @@ from rich.progress import track, Progress, BarColumn, MofNCompleteColumn, TimeEl
 
 training_progress_bar = Progress("{task.description}", BarColumn(), MofNCompleteColumn(), TimeElapsedColumn(), TimeRemainingColumn())
 
+# class FeedforwardNeuralNetModel(nn.Module):
+#     def __init__(self, input_dim, hidden_dim, output_dim):
+#         super(FeedforwardNeuralNetModel, self).__init__()
+#         # Linear function
+#         self.fc1 = nn.Linear(input_dim, hidden_dim) 
+
+#         # Non-linearity
+#         self.sigmoid = nn.Sigmoid()
+
+#         # Linear function (readout)
+#         self.fc2 = nn.Linear(hidden_dim, output_dim)  
+
+#     def forward(self, x):
+#         # Linear function  # LINEAR
+#         out = self.fc1(x)
+
+#         # Non-linearity  # NON-LINEAR
+#         out = self.sigmoid(out)
+
+#         # Linear function (readout)  # LINEAR
+#         out = self.fc2(out)
+#         return out
 
 class ClassifierBert(nn.Module):
     def __init__(self, device, tasks=["abuse"], labels=2, flag = 0):
         super(ClassifierBert, self).__init__()
 
         if flag == 1:
-            self.bert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv2",
+            self.bert = AutoModel.from_pretrained("aubmindlab/bert-base-arabertv02",
                                               return_dict= True)
+            
         else:
             self.bert = BertModel.from_pretrained("bert-base-uncased",
                                               return_dict=True)
@@ -44,6 +67,7 @@ class ClassifierBert(nn.Module):
         self.linear_layer = dict()
         self.sigmoid_layer = nn.Sigmoid()
         for task in tasks:
+            # self.linear_layer[task] = FeedforwardNeuralNetModel(BertConfig().hidden_size, 384, labels).to(device)
             self.linear_layer[task] = nn.Linear(BertConfig().hidden_size, labels).to(device)
 
     def forward(self, ids, attn):
@@ -88,12 +112,16 @@ class AbuseClassifier():
         self.annotators = annotators
         
         if params.ar_dat == 1:
-            self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv2")
-            model_name = "aubmindlab/bert-base-arabertv2"
+            
+
+
+            model_name = "aubmindlab/bert-base-arabertv02"
             arabert_prep = ArabertPreprocessor(model_name=model_name)
             self.data_train["text"] =  self.data_train["text"].map(lambda a: arabert_prep.preprocess(a))
             self.data_dev["text"] =  self.data_dev["text"].map(lambda a: arabert_prep.preprocess(a))
             self.data_test["text"] =  self.data_test["text"].map(lambda a: arabert_prep.preprocess(a))
+            
+            self.tokenizer = AutoTokenizer.from_pretrained("aubmindlab/bert-base-arabertv02")
         else:
             self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
             
@@ -228,7 +256,7 @@ class AbuseClassifier():
         self.model = self.new_model()
         self.model = self.model.to(self.device)
         
-        self.optimizer = AdamW(self.model.parameters(), lr=self.params.learning_rate)
+        self.optimizer = AdamW(self.model.parameters(), lr=self.params.learning_rate) # eps = 1e-05
         
         train_batches = batches_train
         val_batches = batches_dev
@@ -239,6 +267,7 @@ class AbuseClassifier():
         # lr_scheduler = get_scheduler(name="linear", optimizer=self.optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
 
         self.loss = self.create_loss_functions()
+        minscore = 0.23
         with training_progress_bar: 
             task_id = training_progress_bar.add_task("Training", total=self.params.num_epochs)
             batch_task_id = training_progress_bar.add_task("Training batch", total=len(train_batches))
@@ -294,7 +323,11 @@ class AbuseClassifier():
                     print("Validation")
                     val_score = self.report_results(val_results)
                     print(val_score)
-                
+                    if val_score["Cross entropy unmasked"]<= minscore:
+                        minscore = val_score["Cross entropy unmasked"]
+                        break
+
+
                 
                 training_progress_bar.advance(task_id)
                 training_progress_bar.reset(batch_task_id)
@@ -502,10 +535,10 @@ class AbuseClassifier():
         
         # "F1 masked": round(f1, 4), "Cross entropy masked": round(cr_ent, 4),
         
-        scores = {"F1 masked": round(f1, 4),
-                  "Cross entropy masked": round(cr_ent, 4),
-                  "F1 unmasked": round(f1_unmasked, 4),
-                  "Cross entropy unmasked": round(cr_ent_unmasked, 4)}
+        scores = {"F1 masked": round(f1, 6),
+                  "Cross entropy masked": round(cr_ent, 6),
+                  "F1 unmasked": round(f1_unmasked, 6),
+                  "Cross entropy unmasked": round(cr_ent_unmasked, 6)}
 
         return scores
         

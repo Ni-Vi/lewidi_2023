@@ -14,12 +14,21 @@ def main():
 
     data = DataManager(filepath1, filepath2, filepath3, filepath4)
     def_params = params_lewidi()
-    train_dat = ["conv_train", "ar_train", "br_train", "md_train"]
-    dev_dat = ["conv_dev", "ar_dev", "br_dev", "md_dev"]
-    test_dat = ["conv_test", "ar_test", "br_test", "md_test"]
+    train_dat = ["conv_train", "ar_train", "br_train"]
+    dev_dat = ["conv_dev", "ar_dev", "br_dev"]
+    test_dat = ["conv_test", "ar_test", "br_test"]
     # # [, , ]
+    # train_dat = ["conv_train"]
+    # dev_dat = ["conv_dev"]
+    # test_dat = ["conv_test"]
+    # train_dat = ["ar_train"]
+    # dev_dat = ["ar_dev"] #"ar_dev"
+    # test_dat = ["ar_test"]
+    # train_dat = ["br_train"]
+    # dev_dat = ["br_dev"]
+    # test_dat = ["br_test"]
     # train_dat = ["md_train"]
-    # dev_dat = ["md_dev"]
+    # dev_dat = ["md_dev"] #["md_dev"]
     # test_dat = ["md_test"]
     
     names = ["CONV-AI","ARABIC","BREXIT","MDDATASET"]
@@ -80,15 +89,19 @@ def main():
             comp_metrics["hard_label"]= pd.to_numeric(comp_metrics["hard_label"], downcast="integer")
             
             
-        results_filepath = "./lewidi_2023/data/results"
+        results_filepath = "./lewidi_2023/data/results/"
         os.makedirs(results_filepath, exist_ok=True) 
         if key_test == "conv_test":
-            comp_metrics.to_csv(results_filepath + "ConvAbuse_results.tsv", sep="\t", header = False,index=False)
+            print("not saving")
+            # comp_metrics.to_csv(results_filepath + "ConvAbuse_results.tsv", sep="\t", header = False,index=False)
         elif key_test == "ar_test":
-            comp_metrics.to_csv(results_filepath + "ArMIS_results.tsv", sep="\t", header = False,index=False)
+            print("not saving")
+            # comp_metrics.to_csv(results_filepath + "ArMIS_results.tsv", sep="\t", header = False,index=False)
         elif key_test == "br_test":
+            print("saving")
             comp_metrics.to_csv(results_filepath + "HS-Brexit_results.tsv", sep="\t", header = False,index=False)
         elif key_test == "md_test":
+            print("saving")
             comp_metrics.to_csv(results_filepath + "MD-Agreement_results.tsv", sep="\t", header = False,index=False)
         print("---------------------------------------", names[i], "DATASET END--------------------------------------------")
         print("-------------------------------------------------------------------------------------------------------")

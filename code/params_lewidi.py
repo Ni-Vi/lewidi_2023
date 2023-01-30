@@ -5,10 +5,10 @@ import torch
 
 class params_lewidi():
     def __init__(self):
-        self.batch_size = 32
+        self.batch_size = 8
         self.learning_rate =  1e-8
         self.max_len = 128
-        self.num_epochs = 60
+        self.num_epochs = 20
         self.random_state = 9999
         self.task = "multi_task"
         self.batch_weight = None
