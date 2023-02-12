@@ -1,12 +1,29 @@
+from enum import Enum
 from pathlib import Path
 
-import pandas as pd
-from lightning import LightningDataModule
+from pytorch_lightning import LightningDataModule
+from torch.utils.data import DataLoader
+from torchdata.datapipes.map import MapDataPipe
+from transformers import AutoTokenizer
 
-from lewidi.datasets import DatasetName, create_dataframe_from_instances, load_dataset
+from lewidi.datasets import DatasetName, InstanceLoader, ModelInstance
+
+
+class Stage(str, Enum):  # noqa: WPS600
+    """Stages under which the datamodule can be prepared with.
+
+    Need to subclass str to make this a `StrEnum` because I don't want to start overriding methods
+    within the datamodule and this is the cleanest and simplest way to enforce some semblance of
+    type.
+    """
+
+    train = "train"
+    test = "test"
 
 
 class LeWiDiDataModule(LightningDataModule):
+    """Prepare and load data for the LeWiDi model experiments."""
+
     def __init__(
         self,
         dataset_name: DatasetName,
@@ -14,10 +31,14 @@ class LeWiDiDataModule(LightningDataModule):
         val_data_path: Path,
         test_data_path: Path,
         batch_size: int,
+        shuffle: bool,
         pretrained_model: str,
         processed_data_root: Path,
+        num_workers: int = 2,
+        drop_last: bool = True,
         force_data_preparation: bool = False,
     ) -> None:
+        super().__init__()
         self._dataset_name = dataset_name
 
         self._pretrained_model = pretrained_model
@@ -27,38 +48,97 @@ class LeWiDiDataModule(LightningDataModule):
         self._test_data_path = test_data_path
 
         self._batch_size = batch_size
+        self._shuffle = shuffle
+        self._num_workers = num_workers
+        self._drop_last = drop_last
+
+        self._tokenizer = AutoTokenizer.from_pretrained(self._pretrained_model)
 
         self._processed_data_dir = processed_data_root.joinpath(self._dataset_name.value)
         self._force_data_preparation = force_data_preparation
+
+        self._train_dataset: MapDataPipe[ModelInstance] | None = None
+        self._val_dataset: MapDataPipe[ModelInstance] | None = None
+        self._test_dataset: MapDataPipe[ModelInstance] | None = None
 
     def prepare_data(self) -> None:
         """Prepare processed data for modelling."""
         # Create the directory for processed data if it doesnt exist
         self._processed_data_dir.mkdir(parents=True, exist_ok=True)
 
-        # Create datafranes for each data split
-        train_dataset = self._prepare_instance_for_dataset_split(self._train_data_path)
-        val_dataset = self._prepare_instance_for_dataset_split(self._val_data_path)
+        # Create dataset for each data split
+        self._prepare_dataset(self._train_data_path)
+        self._prepare_dataset(self._val_data_path)
 
-        processed_train_data_path = self._processed_data_dir.joinpath(self._train_data_path.name)
+    def setup(self, stage: str) -> None:
+        """Setup the datamodule."""
+        stage = Stage(stage)
+        if stage == Stage.train:
+            self._train_dataset = self._prepare_dataset(self._train_data_path)
+            self._val_dataset = self._prepare_dataset(self._val_data_path)
+            self._test_dataset = self._prepare_dataset(self._test_data_path)
 
-        # Process every file if not done already
-        train_instances = create_dataframe_from_instances(
-            load_dataset(self._train_data_path, self._dataset_name)
+        if stage == Stage.test:
+            self._test_dataset = self._prepare_dataset(self._test_data_path)
+
+    def train_dataloader(self) -> DataLoader[ModelInstance]:
+        """Create a dataloader over the training data."""
+        if self._train_dataset is None:
+            raise AssertionError("The `setup()` method must be called with `stage='train'`")
+        return DataLoader(
+            self._train_dataset,
+            batch_size=self._batch_size,
+            shuffle=self._shuffle,
+            num_workers=self._num_workers,
+            drop_last=self._drop_last,
         )
 
-    def _prepare_instance_for_dataset_split(self, data_path: Path) -> pd.DataFrame:
-        """Prepare the data for the split and cache it."""
-        processed_data_path = self._processed_data_dir.joinpath(self._train_data_path.name)
-
-        # If the file exists, just load it
-        if processed_data_path.exists() or self._force_data_preparation:
-            return pd.read_json(processed_data_path)
-
-        # If the file doesnt exist, create the dataframe and cache it
-        instances_dataframe = create_dataframe_from_instances(
-            load_dataset(self._train_data_path, self._dataset_name)
+    def val_dataloader(self) -> DataLoader[ModelInstance]:
+        """Create a dataloader over the validation data."""
+        if self._val_dataset is None:
+            raise AssertionError("The `setup()` method must be called with `stage='train'`")
+        return DataLoader(
+            self._val_dataset,
+            batch_size=self._batch_size,
+            shuffle=self._shuffle,
+            num_workers=self._num_workers,
+            drop_last=self._drop_last,
         )
-        instances_dataframe.to_json(processed_data_path)
 
-        return instances_dataframe
+    def test_dataloader(self) -> DataLoader[ModelInstance]:
+        """Create a dataloader over the test data."""
+        if self._test_dataset is None:
+            raise AssertionError(
+                "The `setup()` method must be called with `stage='test'` or `stage='train'`"
+            )
+        return DataLoader(
+            self._test_dataset,
+            batch_size=self._batch_size,
+            shuffle=self._shuffle,
+            num_workers=self._num_workers,
+            drop_last=self._drop_last,
+        )
+
+    def _prepare_dataset(self, data_path: Path) -> MapDataPipe[ModelInstance]:
+        """Prepare the data for the dataset split and cache it.
+
+        It is easier to just use a datapipe instead of creating a boilerplate `Dataset` class, even
+        though torchdata is in beta.
+        """
+        processed_data_path = self._processed_data_dir.joinpath(data_path.name)
+
+        # If the model instances already exist, just load it
+        if processed_data_path.exists() or not self._force_data_preparation:
+            model_instances = InstanceLoader[ModelInstance].parse_file(processed_data_path)
+            return model_instances.create_datapipe()
+
+        # If the model instances don't exist, we need to create them.
+        dataset_instances = InstanceLoader.from_raw_data(data_path, self._dataset_name)
+
+        # Convert the dataset instances to model instances
+        model_instances = dataset_instances.convert(self._tokenizer)
+
+        # Save the model instances
+        model_instances.save(processed_data_path)
+
+        return model_instances.create_datapipe()
