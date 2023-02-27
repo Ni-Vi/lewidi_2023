@@ -90,13 +90,13 @@ class LeWiDiSingleTaskModel(LightningModule):
         """Configure optimizers for training."""
         return self._optimizer(params=self.parameters())
 
-    def _step(self, batch: SingleTaskModelInstance) -> Float[torch.Tensor, batch_size labels]:
+    def _step(self, batch: SingleTaskModelInstance) -> Float[torch.Tensor, "batch_size labels"]:
         """Take a step with the model and return the logits."""
-        backbone_output: Float[torch.Tensor, batch_size sequence_length dim] = self._backbone(
+        backbone_output: Float[torch.Tensor, "batch_size sequence_length dim"] = self._backbone(
             input_ids=batch["token_ids"],
             attention_mask=batch["token_mask"],
         ).pooler_output
 
-        logits: Float[torch.Tensor, batch_size labels] = self._head(backbone_output)
+        logits: Float[torch.Tensor, "batch_size labels"] = self._head(backbone_output)
 
         return logits

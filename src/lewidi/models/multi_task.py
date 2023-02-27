@@ -86,17 +86,17 @@ class LeWiDiMultiTaskModel(LightningModule):
         step_metric: MultiTaskMetric,
     ) -> torch.Tensor:
         """Evaluate batch during training and return the loss."""
-        backbone_output: Float[torch.Tensor, batch_size sequence_length dim] = self._backbone(
+        backbone_output: Float[torch.Tensor, "batch_size sequence_length dim"] = self._backbone(
             input_ids=batch["token_ids"],
             attention_mask=batch["token_mask"],
         ).pooler_output
 
         loss = torch.tensor(0, device=backbone_output.device, dtype=torch.float)
 
-        logits_per_task: dict[str, Float[torch.Tensor, batch_size labels]] = {}
+        logits_per_task: dict[str, Float[torch.Tensor, "batch_size labels"]] = {}
 
         for task in self._heads:
-            task_logits: Float[torch.Tensor, batch_size labels] = self._heads[task](
+            task_logits: Float[torch.Tensor, "batch_size labels"] = self._heads[task](
                 backbone_output
             )
             logits_per_task[task] = task_logits

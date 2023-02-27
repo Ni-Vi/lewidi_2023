@@ -39,7 +39,7 @@ def extract_soft_labels_from_task_hard_labels(
 
 
 def get_relevant_hard_labels_from_predictions(
-    logits_per_task: dict[str, Float[torch.Tensor, batch_size labels]],
+    logits_per_task: dict[str, Float[torch.Tensor, "batch_size labels"]],
     target_label_per_task: dict[str, torch.Tensor],
 ) -> list[torch.Tensor]:
     """For all the predicted labels, only keep the hard labels where we have a target."""
@@ -48,14 +48,14 @@ def get_relevant_hard_labels_from_predictions(
     target_label_per_task = dict(sorted(target_label_per_task.items()))
 
     # Convert the logits to a single tensor
-    logits: Float[torch.Tensor, batch_size tasks labels] = torch.stack(
+    logits: Float[torch.Tensor, "batch_size tasks labels"] = torch.stack(
         list(logits_per_task.values()), dim=1
     )
     # Get the prediction per task from the logits
-    prediction_per_task: Int[torch.Tensor, batch_size tasks] = logits.sigmoid().argmax(-1)
+    prediction_per_task: Int[torch.Tensor, "batch_size tasks"] = logits.sigmoid().argmax(-1)
 
     # Convert the target label per task into a single tensor
-    targets: Int[torch.Tensor, batch_size tasks] = torch.stack(
+    targets: Int[torch.Tensor, "batch_size tasks"] = torch.stack(
         list(target_label_per_task.values()), dim=1
     )
     # Get a mask of all the predictions which should be ignored in the aggregation

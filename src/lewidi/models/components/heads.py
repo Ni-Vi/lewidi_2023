@@ -14,8 +14,8 @@ class Head(torch.nn.Module):
     """Base head which is inherited by other Heads."""
 
     def forward(
-        self, encoding: Float[torch.Tensor, batch ... dim]
-    ) -> Float[torch.Tensor, batch ... label]:
+        self, encoding: Float[torch.Tensor, "batch ... dim"]
+    ) -> Float[torch.Tensor, "batch ... label"]:
         """Project the encoded inputs to a set of logits over the output distribution."""
         raise NotImplementedError
 
@@ -42,8 +42,8 @@ class ClassifierHead(Head):
         self._classification_layer = torch.nn.Linear(classifier_input_dim, num_labels)
 
     def forward(
-        self, encoding: Float[torch.Tensor, batch dim]
-    ) -> Float[torch.Tensor, batch label]:
+        self, encoding: Float[torch.Tensor, "batch dim"]
+    ) -> Float[torch.Tensor, "batch label"]:
         """Classifier the encoded input into logits over the labels."""
         if self._feedforward is not None:
             encoding = self._feedforward(encoding)
