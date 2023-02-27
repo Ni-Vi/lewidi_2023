@@ -1,0 +1,10 @@
+# @package _global_
+defaults:
+  - override /data:
+  - data/dataset/conv_abuse@data
+
+tags: ["single_task"]
+
+logger:
+  wandb:
+    tags: ${tags}

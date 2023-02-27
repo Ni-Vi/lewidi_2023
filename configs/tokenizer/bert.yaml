@@ -1,0 +1,9 @@
+_target_: lewidi.data.tokenizers.BERTTokenizer
+
+tokenizer:
+  _target_: transformers.AutoTokenizer.from_pretrained
+  pretrained_model_name_or_path: bert-base-uncased
+
+tokenize_kwargs:
+  padding: max_length
+  return_attention_mask: true

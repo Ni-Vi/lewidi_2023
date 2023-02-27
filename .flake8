@@ -14,6 +14,10 @@ extend-ignore =
 		E501,
 		# Stop finding commented out code because it's mistaking shape annotations for code
 		E800,
+		# Disable because this project uses jaxtyping (https://github.com/google/jaxtyping/blob/main/FAQ.md#flake8-is-throwing-an-error)
+		F722,
+		# Allow import to be uppercase, because torch.nn.functional as F
+		N812,
 		# Stop complaining about using functions from random
 		S311,
 		# Ignore errors for internal mypy traceback, stderr output, or an unmatched line.
@@ -38,6 +42,8 @@ extend-ignore =
 		WPS306,
 		# Allow return statement that simply returns a prior statement
 		WPS331,
+		# Allow vague-ish import because want to import torch.nn.functional as F
+		WPS347,
 		# Allow new lines to start with a dot (caused by Black)
     WPS348,
 		# Allow logic in __init__ modules

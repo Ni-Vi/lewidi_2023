@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /tokenizer/arabert
+
+dataset_name: ${DatasetName:md_agreement}
+processed_data_root: ${paths.data_dir}/processed/MD-Agreement/
+
+raw_data_paths:
+  _target_: lewidi.data.datamodules.DatasetSplitPaths
+  train: ${paths.data_dir}/raw/MD-Agreement/MD-Agreement_train.json
+  val: ${paths.data_dir}/raw/MD-Agreement/MD-Agreement_dev.json
+  test: ${paths.data_dir}/raw/MD-Agreement/MD-Agreement_test.json

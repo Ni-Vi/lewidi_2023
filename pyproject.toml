@@ -33,15 +33,29 @@ transformers = "^4.26.0"
 rich = "^13.2.0"
 pytorch-lightning = "^1.9.0"
 torchdata = "^0.5.1"
+arabert = "^1.0.1"
+allennlp-light = "^1.0.0"
+jaxtyping = "^0.2.11"
+ai2-tango = "^1.2.0"
+typeguard = "^2.13.3"
+hydra-zen = "^0.9.1"
+loguru = "^0.6.0"
+wandb = "^0.13.10"
 
 [tool.poetry.group.lint.dependencies]
-black = "^22.12.0"
 wemake-python-styleguide = "^0.17.0"
 mypy = "^0.991"
 pytest = "^7.2.1"
 pre-commit = "^3.0.0"
 poethepoet = "^0.18.1"
-isort = "^5.11.4"
+ruff = "^0.0.252"
+black = "^23.1.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.1"
+pytest-cov = "^4.0.0"
+pytest-cases = "^3.6.13"
 
 [tool.black]
 line-length = 99

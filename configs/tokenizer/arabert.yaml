@@ -1,0 +1,8 @@
+defaults:
+  - bert.yaml
+  - _self_
+
+_target_: lewidi.data.tokenizers.AraBERTTokenizer
+
+tokenizer:
+  pretrained_model_name_or_path: aubmindlab/bert-base-arabertv02

@@ -1,13 +1,21 @@
+from __future__ import annotations
+
 import itertools
-from typing import Any, Literal
+import json
+from typing import TYPE_CHECKING, Any, Literal
 
+import orjson
+from loguru import logger
 from pydantic import BaseModel, Field, root_validator
-from transformers import BatchEncoding
 
-from lewidi.datasets.constants import DatasetLanguage, DatasetName
+from lewidi.data.datasets.constants import DatasetLanguage, DatasetName
 
 
-def _fix_annotation(annotation: int, dataset_name: DatasetName) -> int:
+if TYPE_CHECKING:
+    from pathlib import Path
+
+
+def conform_annotation(annotation: int, dataset_name: DatasetName) -> int:
     """Fix any annotations that are not 0 or 1."""
     if dataset_name != DatasetName.conv_abuse:
         return annotation
@@ -17,7 +25,9 @@ def _fix_annotation(annotation: int, dataset_name: DatasetName) -> int:
     if annotation >= 0:
         return 0
 
-    raise ValueError("Annotation value is not supported??")
+    # If nothing else, return the annotation with a warning
+    logger.warning(f"Annotation {annotation} was not conformed.")
+    return annotation
 
 
 class DatasetInstance(BaseModel, extra="allow", allow_population_by_field_name=True):
@@ -72,14 +82,15 @@ class DatasetInstance(BaseModel, extra="allow", allow_population_by_field_name=T
 
         if annotations:
             annotation_list = [
-                _fix_annotation(int(annotation), dataset_name)
+                conform_annotation(int(annotation), dataset_name)
                 for annotation in annotations.split(",")
             ]
         else:
             annotation_list = [None for _ in annotator_list]
 
         raw_values["annotation_per_annotators"] = {
-            annotator: annotation for annotator, annotation in zip(annotator_list, annotation_list)
+            annotator: annotation
+            for annotator, annotation in zip(annotator_list, annotation_list, strict=True)
         }
 
         return raw_values
@@ -135,11 +146,21 @@ def include_all_annotators_in_all_instances(
     return instances
 
 
-class ModelInstance(BaseModel):
-    """Instance provided to the model for modelling."""
+def parse_instances_from_raw_data(path: Path, dataset_name: DatasetName) -> list[DatasetInstance]:
+    """Load all the instances from the raw data.
 
-    tokens: BatchEncoding
-    tasks: list[str]
-    annotation_per_annotator: dict[str, int]
-    soft_label: dict[int, float | None]
-    hard_label: int | None
+    Load the data using json, then dump and reload with orjson to automatically handle and remove
+    all the NaN's since NaN is not actually valid under the [JSON
+    schema](https://www.json.org/json-en.html).
+    """
+    raw_data: dict[int, dict[str, Any]] = orjson.loads(orjson.dumps(json.loads(path.read_bytes())))
+
+    # Parse and validate all the data
+    instances = [
+        DatasetInstance.parse_obj({"dataset": dataset_name, **raw_data_item})
+        for raw_data_item in raw_data.values()
+    ]
+
+    instances = include_all_annotators_in_all_instances(instances)
+
+    return instances
