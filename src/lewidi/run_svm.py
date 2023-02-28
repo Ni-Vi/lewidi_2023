@@ -34,11 +34,14 @@ def main(dataset_name: DatasetName) -> None:
         DataLoaderOptions(batch_size=1, shuffle=False, num_workers=0, drop_last=False),
     )
 
-    model = LeWiDiSVMModel(vectorizer, clf, datamodule)
+    model = LeWiDiSVMModel(dataset_name, vectorizer, clf, datamodule)
 
     model.train()
     model.test()
 
 
 if __name__ == "__main__":
+    main(DatasetName.armis)
+    main(DatasetName.md_agreement)
     main(DatasetName.conv_abuse)
+    main(DatasetName.hs_brexit)

@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from torchdata.datapipes.map import MapDataPipe
 
     from lewidi.data.datamodules import LeWiDiDataModule
+    from lewidi.data.datasets.constants import DatasetName
 
 
 class LeWiDiSVMModel:
@@ -23,10 +24,12 @@ class LeWiDiSVMModel:
 
     def __init__(
         self,
+        dataset_name: DatasetName,
         vectorizer: TfidfVectorizer,
         model: LogisticRegression,
         datamodule: LeWiDiDataModule,
     ) -> None:
+        self._dataset_name = dataset_name
         self._vectorizer = vectorizer
         self._model = model
         self._datamodule = datamodule
@@ -73,4 +76,4 @@ class LeWiDiSVMModel:
         cross_entropy = compute_cross_entropy(
             torch.from_numpy(test_targets), torch.from_numpy(predictions)
         )
-        rich_print(f"F1: {f1_score} / cross-entropy: {cross_entropy}")
+        rich_print(f"[{self._dataset_name.name}] F1: {f1_score} / cross-entropy: {cross_entropy}")
