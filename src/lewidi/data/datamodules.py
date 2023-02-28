@@ -83,7 +83,7 @@ class LeWiDiDataModule(Generic[T], LightningDataModule):
 
         self._dataloader_options = dataloader_options
 
-        self._processed_data_dir = processed_data_root.joinpath(self._dataset_name.value)
+        self._processed_data_dir = processed_data_root
         self._force_data_preparation = force_data_preparation
 
         self._train_dataset: MapDataPipe[T] | None = None
