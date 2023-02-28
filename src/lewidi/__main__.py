@@ -29,12 +29,6 @@ OmegaConf.register_new_resolver("DatasetName", lambda x: DatasetName[x])
 OmegaConf.register_new_resolver("path", Path, replace=True)
 
 
-@hydra.main(version_base="1.3", config_path=str(CONFIGS_ROOT), config_name="train.yaml")
-def print_config(config: DictConfig) -> None:
-    """Just dump the config."""
-    print(OmegaConf.to_yaml(config))
-
-
 def get_all_tasks_for_multitask_model(datamodule: LeWiDiDataModule) -> set[str] | None:
     """Get all the task names for the multitask model."""
     if not isinstance(datamodule, LeWiDiMultiTaskDataModule):
@@ -93,8 +87,21 @@ def main(config: DictConfig) -> None:
 
     if config.get("train", False):
         logger.info("Starting model training")
-        trainer.fit(model, datamodule=datamodule)
+        trainer.fit(model, datamodule=datamodule, ckpt_path=config.get("checkpoint_path"))
+
+    if config.get("test", False):
+        logger.info("Starting testing")
+        ckpt_path = trainer.checkpoint_callback.best_model_path  # pyright: ignore
+
+        if ckpt_path == "":
+            logger.warning("Best ckpt not found! Using current weights for testing...")
+            ckpt_path = None
+
+        trainer.test(model=model, datamodule=datamodule, ckpt_path=ckpt_path)
+        logger.info(f"Best ckpt path: {ckpt_path}")
+
+    logger.info("Done!")
 
 
 if __name__ == "__main__":
-    print_config()
+    main()

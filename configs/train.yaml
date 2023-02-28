@@ -17,6 +17,7 @@ seed: 12345
 
 train: true
 test: true
+checkpoint_path: null
 
 tags: ["single_task"]
 

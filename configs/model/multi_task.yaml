@@ -1,3 +1,6 @@
+defaults:
+  - default.yaml
+
 _target_: lewidi.models.LeWiDiMultiTaskModel.from_tasks
 
 backbone:
@@ -9,9 +12,3 @@ template_head:
   _partial_: true
   input_dim: 768
   num_labels: 2
-
-optimizer:
-  _target_: torch.optim.Adam
-  _partial_: true
-  lr: 0.001
-  weight_decay: 0.0
