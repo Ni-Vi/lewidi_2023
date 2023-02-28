@@ -79,7 +79,7 @@ class LeWiDiDataModule(Generic[T], LightningDataModule):
         self._dataset_name = dataset_name
         self._tokenizer = tokenizer
 
-        self._raw_data_paths = raw_data_paths
+        self.raw_data_paths = raw_data_paths
 
         self._dataloader_options = dataloader_options
 
@@ -96,20 +96,20 @@ class LeWiDiDataModule(Generic[T], LightningDataModule):
         self._processed_data_dir.mkdir(parents=True, exist_ok=True)
 
         # Create dataset for each data split
-        self._prepare_dataset_split(self._raw_data_paths.train)
-        self._prepare_dataset_split(self._raw_data_paths.val)
-        self._prepare_dataset_split(self._raw_data_paths.test)
+        self._prepare_dataset_split(self.raw_data_paths.train)
+        self._prepare_dataset_split(self.raw_data_paths.val)
+        self._prepare_dataset_split(self.raw_data_paths.test)
 
     def setup(self, stage: str) -> None:
         """Setup the datamodule."""
         stage = Stage(stage)
         if stage == Stage.fit:
-            self._train_dataset = self._prepare_dataset_split(self._raw_data_paths.train)
-            self._val_dataset = self._prepare_dataset_split(self._raw_data_paths.val)
-            self._test_dataset = self._prepare_dataset_split(self._raw_data_paths.test)
+            self._train_dataset = self._prepare_dataset_split(self.raw_data_paths.train)
+            self._val_dataset = self._prepare_dataset_split(self.raw_data_paths.val)
+            self._test_dataset = self._prepare_dataset_split(self.raw_data_paths.test)
 
         if stage == Stage.test:
-            self._test_dataset = self._prepare_dataset_split(self._raw_data_paths.test)
+            self._test_dataset = self._prepare_dataset_split(self.raw_data_paths.test)
 
     def train_dataloader(self) -> DataLoader[T]:
         """Create a dataloader over the training data."""
@@ -135,10 +135,10 @@ class LeWiDiDataModule(Generic[T], LightningDataModule):
         The choice of dataset split results in different preparations of the model instances.
         Training and validation instances have targets, whereas test instances do not.
         """
-        dataset_instances = self._prepare_dataset_instances(path)
+        dataset_instances = self.prepare_dataset_instances(path)
         return self._prepare_model_instances_with_targets(dataset_instances)
 
-    def _prepare_dataset_instances(self, path: Path) -> MapDataPipe[DatasetInstance]:
+    def prepare_dataset_instances(self, path: Path) -> MapDataPipe[DatasetInstance]:
         """Prepare dataset instances from the given path."""
         processed_data_path = self._processed_data_dir.joinpath(path.name)
 
