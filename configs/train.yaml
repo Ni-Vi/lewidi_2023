@@ -16,15 +16,10 @@ defaults:
 seed: 12345
 
 train: true
-# trainer:
-#   max_epochs: 1
-#   accelerator: cpu # debuggers don't like gpus
-#   devices: 1 # debuggers don't like multiprocessing
-#   detect_anomaly: true # raise exception if NaN or +/-inf is detected in any tensor
-#   limit_train_batches: 10
-#   limit_val_batches: 10
+test: true
 
-# data:
-#   dataloader_options:
-#     num_workers: 0 # debuggers don't like multiprocessing
-#     pin_memory: False # disable gpu memory pin
+tags: ["single_task"]
+
+logger:
+  wandb:
+    tags: ${tags}
