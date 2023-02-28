@@ -28593,23 +28593,6 @@
 			"domain": "Elections2020"
 		}
 	},
-	"1683": {
-		"text": "So \"vicious...despicable\" were not the officers who killed and stood watch for George Floyd\u2019s death?? <url>",
-		"annotation task": "offensiveness detection",
-		"number of annotations": 5,
-		"annotations": "0,0,0,0,1",
-		"annotators": "Ann535,Ann158,Ann448,Ann383,Ann480,Ann579",
-		"lang": "en",
-		"hard_label": "0",
-		"soft_label": {
-			"0": 0.8,
-			"1": 0.2
-		},
-		"split": "test",
-		"other_info": {
-			"domain": "BLM"
-		}
-	},
 	"1684": {
 		"text": "This deadass makes me so deeply infuriated on another level that I cannot express I can\u2019t go to riots I\u2019d be tackling police for shit like this fuck these racist and idiotic pigs",
 		"annotation task": "offensiveness detection",
@@ -34622,23 +34605,6 @@
 		"soft_label": {
 			"0": 1.0,
 			"1": 0.0
-		},
-		"split": "test",
-		"other_info": {
-			"domain": "BLM"
-		}
-	},
-	"2038": {
-		"text": "This World is nuts! Racism has been accepted for far too long! When #COVID19 came into this world, we were told it doesn\u2019t discriminate.... 4 months later, &amp; even the #CoronaVirus has started to discriminate against Black &amp; Asian people!  #BlackLivesMatter #EveryLifeMatters",
-		"annotation task": "offensiveness detection",
-		"number of annotations": 5,
-		"annotations": "0,0,0,0,1",
-		"annotators": "Ann535,Ann158,Ann448,Ann383,Ann480,Ann579",
-		"lang": "en",
-		"hard_label": "0",
-		"soft_label": {
-			"0": 0.8,
-			"1": 0.2
 		},
 		"split": "test",
 		"other_info": {
