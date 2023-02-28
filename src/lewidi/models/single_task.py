@@ -46,11 +46,12 @@ class LeWiDiSingleTaskModel(LightningModule):
         prob_per_class = torch.sigmoid(logits)
         loss = self._criterion(prob_per_class, batch["target_hard_label"])
 
-        # Update metrics
-        self._train_metrics.update(
-            loss, logits, batch["target_hard_label"], batch["target_soft_label"]
-        )
-        self.log_dict(self._train_metrics.compute(), prog_bar=True, logger=True)
+        with torch.no_grad():
+            # Update metrics
+            self._train_metrics.update(
+                loss, logits, batch["target_hard_label"], batch["target_soft_label"]
+            )
+            self.log_dict(self._train_metrics.compute(), prog_bar=True, logger=True)
 
         return loss
 
@@ -70,7 +71,7 @@ class LeWiDiSingleTaskModel(LightningModule):
 
         return loss
 
-    def test_step(self, batch: SingleTaskModelInstance) -> torch.Tensor:
+    def test_step(self, batch: SingleTaskModelInstance, _: int) -> torch.Tensor:
         """Evaluate batch during validation and return the loss."""
         # Get model output
         logits = self._step(batch)

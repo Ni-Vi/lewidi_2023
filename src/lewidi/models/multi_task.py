@@ -42,11 +42,11 @@ class LeWiDiMultiTaskModel(LightningModule):
         self._criterion = torch.nn.CrossEntropyLoss()
 
         self._train_metrics = MultiTaskMetric(prefix="train")
-        self._train_metrics_per_task = {task: TaskMetric(f"train/{task}") for task in self._heads}
+        self._train_metrics_per_task = torch.nn.ModuleDict({task: TaskMetric(f"train/{task}") for task in self._heads})
         self._val_metrics = MultiTaskMetric(prefix="val")
-        self._val_metrics_per_task = {task: TaskMetric(f"val/{task}") for task in self._heads}
+        self._val_metrics_per_task = torch.nn.ModuleDict({task: TaskMetric(f"val/{task}") for task in self._heads})
         self._test_metrics = MultiTaskMetric(prefix="test")
-        self._test_metrics_per_task = {task: TaskMetric(f"test/{task}") for task in self._heads}
+        self._test_metrics_per_task = torch.nn.ModuleDict({task: TaskMetric(f"test/{task}") for task in self._heads})
 
     @classmethod
     def from_tasks(
@@ -62,13 +62,13 @@ class LeWiDiMultiTaskModel(LightningModule):
             batch, per_task_metrics=self._train_metrics_per_task, step_metric=self._train_metrics
         )
 
-    def validation_step(self, batch: MultiTaskModelInstance) -> torch.Tensor:
+    def validation_step(self, batch: MultiTaskModelInstance, _: int) -> torch.Tensor:
         """Evaluate batch during validation and return the loss."""
         return self._model_step(
             batch, per_task_metrics=self._val_metrics_per_task, step_metric=self._val_metrics
         )
 
-    def test_step(self, batch: MultiTaskModelInstance) -> torch.Tensor:
+    def test_step(self, batch: MultiTaskModelInstance, _: int) -> torch.Tensor:
         """Evaluate batch during testing and return the loss."""
         return self._model_step(
             batch, per_task_metrics=self._test_metrics_per_task, step_metric=self._test_metrics
@@ -111,18 +111,20 @@ class LeWiDiMultiTaskModel(LightningModule):
             )
             loss += task_loss
 
-            per_task_metrics[task].update(
-                loss, task_logits, batch["target_hard_label_per_task"][task]
-            )
+            with torch.no_grad():
+                per_task_metrics[task].update(
+                    loss, task_logits, batch["target_hard_label_per_task"][task]
+                )
 
         # Update metrics
-        step_metric.update(
-            loss,
-            logits_per_task,
-            batch["target_hard_label_per_task"],
-            batch["target_hard_label"],
-            batch["target_soft_label"],
-        )
+        with torch.no_grad():
+            step_metric.update(
+                loss,
+                logits_per_task,
+                batch["target_hard_label_per_task"],
+                batch["target_hard_label"],
+                batch["target_soft_label"],
+            )
 
         # Log metrics
         self.log_dict(step_metric.compute(), prog_bar=True, logger=True)

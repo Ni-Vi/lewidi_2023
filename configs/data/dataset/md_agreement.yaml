@@ -2,10 +2,10 @@
 
 defaults:
   - _self_
-  - /tokenizer/arabert
+  - /tokenizer/bert
 
 dataset_name: ${DatasetName:md_agreement}
-processed_data_root: ${paths.data_dir}/processed/MD-Agreement/
+processed_data_root: ${path:${paths.data_dir}/processed/}
 
 raw_data_paths:
   _target_: lewidi.data.datamodules.DatasetSplitPaths

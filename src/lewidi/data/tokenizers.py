@@ -42,7 +42,7 @@ class AraBERTTokenizer(Tokenizer):
     def __call__(self, text: str) -> BatchEncoding:
         """Tokenize arabic text."""
         preprocessed_text = self.preprocessor.preprocess(text)
-        return self.tokenizer(preprocessed_text, **self.tokenize_kwargs)
+        return self.tokenizer(preprocessed_text, **self.tokenize_kwargs).convert_to_tensors(tensor_type="pt")
 
 
 @dataclass

@@ -5,7 +5,7 @@ defaults:
   - /tokenizer/arabert
 
 dataset_name: ${DatasetName:armis}
-processed_data_root: ${paths.data_dir}/processed/ArMIS/
+processed_data_root: ${path:${paths.data_dir}/processed/}
 
 raw_data_paths:
   _target_: lewidi.data.datamodules.DatasetSplitPaths

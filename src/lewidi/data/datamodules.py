@@ -121,13 +121,15 @@ class LeWiDiDataModule(Generic[T], LightningDataModule):
         """Create a dataloader over the validation data."""
         if self._val_dataset is None:
             raise DatasetNotPreparedError(Stage.fit)
-        return DataLoader(self._val_dataset, **self._dataloader_options.dict())
+        options = {**self._dataloader_options.dict(), "shuffle": False}
+        return DataLoader(self._val_dataset, **options)
 
     def test_dataloader(self) -> DataLoader[T]:
         """Create a dataloader over the test data."""
         if self._test_dataset is None:
             raise DatasetNotPreparedError(Stage.test)
-        return DataLoader(self._test_dataset, **self._dataloader_options.dict())
+        options = {**self._dataloader_options.dict(), "shuffle": False}
+        return DataLoader(self._test_dataset, **options)
 
     def _prepare_dataset_split(self, path: Path) -> MapDataPipe[T]:
         """Prepare the datasets for the dataset split.
@@ -221,7 +223,7 @@ class LeWiDiMultiTaskDataModule(LeWiDiDataModule[MultiTaskModelInstance]):
 
         # Flatmap over all of them to get the list of tasks
         all_tasks = combined_datapipe.flatmap(
-            lambda instance: list(instance["hard_label_per_task"].keys()),
+            lambda instance: list(instance["target_hard_label_per_task"].keys()),
         )
         unique_tasks: set[str] = set(all_tasks)
 

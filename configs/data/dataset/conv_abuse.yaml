@@ -5,7 +5,7 @@ defaults:
   - /tokenizer/bert
 
 dataset_name: ${DatasetName:conv_abuse}
-processed_data_root: ${path:${paths.data_dir}/processed/ConvAbuse/}
+processed_data_root: ${path:${paths.data_dir}/processed/}
 
 raw_data_paths:
   _target_: lewidi.data.datamodules.DatasetSplitPaths

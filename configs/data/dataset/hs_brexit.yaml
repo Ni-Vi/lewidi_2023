@@ -2,10 +2,10 @@
 
 defaults:
   - _self_
-  - /tokenizer/arabert
+  - /tokenizer/bert
 
 dataset_name: ${DatasetName:hs_brexit}
-processed_data_root: ${paths.data_dir}/processed/HS-Brexit/
+processed_data_root: ${path:${paths.data_dir}/processed/}
 
 raw_data_paths:
   _target_: lewidi.data.datamodules.DatasetSplitPaths

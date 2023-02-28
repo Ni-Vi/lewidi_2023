@@ -2,15 +2,15 @@
 
 defaults:
   - paths: default
-  - trainer: default
+  - trainer: gpu
   - callbacks: default
   - loggers: wandb
 
-  - data: single_task
-  - model: single_task
+  - data: multi_task
+  - model: multi_task
 
   # Dataset to use for modelling
-  - data/dataset/conv_abuse@data
+  - data/dataset/hs_brexit@data
   - _self_
 
 seed: 12345
@@ -19,8 +19,14 @@ train: true
 test: true
 checkpoint_path: null
 
-tags: ["single_task"]
+tags: ["multi-task"]
+
+trainer: 
+  devices: [1]
 
 logger:
   wandb:
+    name: multi-task-hs-brexit
+    offline: False
+    group: "multi-task"
     tags: ${tags}

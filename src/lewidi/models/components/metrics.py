@@ -82,14 +82,14 @@ def aggregate_hard_labels_from_predictions(
     return torch.stack(hard_labels_list, dim=0)
 
 
-@dataclass
-class TaskMetric:
+class TaskMetric(torch.nn.Module):
     """Compute metric for the given task."""
-
-    prefix: str
-    loss: MeanMetric = MeanMetric()
-    f1_score: MulticlassF1Score = MulticlassF1Score(num_classes=2, ignore_index=-100)
-
+    def __init__(self, prefix: str) -> None: 
+        super().__init__()
+        self.prefix = prefix
+        self.loss = MeanMetric()
+        self.f1_score = MulticlassF1Score(num_classes=2, ignore_index=-100)
+    @torch.no_grad()
     def update(self, loss: torch.Tensor, logits: torch.Tensor, targets: torch.Tensor) -> None:
         """Update the metrics."""
         self.loss.update(loss)
@@ -108,12 +108,12 @@ class TaskMetric:
         }
 
 
-@dataclass
 class SingleTaskMetric(TaskMetric):
     """Compute metrics for the single-task model."""
-
-    cross_entropy: MeanMetric = MeanMetric()
-
+    def __init__(self, prefix: str) -> None: 
+        super().__init__(prefix)
+        self.cross_entropy = MeanMetric()
+    @torch.no_grad()
     def update(
         self,
         loss: torch.Tensor,
@@ -144,15 +144,15 @@ class SingleTaskMetric(TaskMetric):
         }
 
 
-@dataclass
-class MultiTaskMetric:
+class MultiTaskMetric(torch.nn.Module):
     """Compute aggregated metrics for the multi-task model."""
-
-    prefix: str
-    loss: MeanMetric = MeanMetric()
-    cross_entropy: MeanMetric = MeanMetric()
-    f1_score: BinaryF1Score = BinaryF1Score()
-
+    def __init__(self, prefix: str) -> None: 
+        super().__init__()
+        self.prefix = prefix
+        self.loss = MeanMetric()
+        self.cross_entropy = MeanMetric()
+        self.f1_score = BinaryF1Score()
+    @torch.no_grad()
     def update(
         self,
         loss: torch.Tensor,
