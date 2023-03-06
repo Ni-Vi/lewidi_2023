@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /tokenizer/bert
+
+dataset_name: ${DatasetName:hs_brexit}
+processed_data_root: ${path:${paths.data_dir}/processed/}
+
+raw_data_paths:
+  _target_: lewidi.data.datamodules.DatasetSplitPaths
+  train: ${paths.data_dir}/raw/HS-Brexit/HS-Brexit_train.json
+  val: ${paths.data_dir}/raw/HS-Brexit/HS-Brexit_dev.json
+  test: ${paths.data_dir}/raw/HS-Brexit/HS-Brexit_test.json

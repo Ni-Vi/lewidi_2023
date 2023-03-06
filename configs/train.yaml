@@ -1,0 +1,32 @@
+# @package _global_
+
+defaults:
+  - paths: default
+  - trainer: gpu
+  - callbacks: default
+  - loggers: wandb
+
+  - data: multi_task
+  - model: multi_task
+
+  # Dataset to use for modelling
+  - data/dataset/hs_brexit@data
+  - _self_
+
+seed: 12345
+
+train: true
+test: true
+checkpoint_path: null
+
+tags: ["multi-task"]
+
+trainer: 
+  devices: [1]
+
+logger:
+  wandb:
+    name: multi-task-hs-brexit
+    offline: False
+    group: "multi-task"
+    tags: ${tags}

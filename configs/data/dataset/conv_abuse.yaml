@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - /tokenizer/bert
+
+dataset_name: ${DatasetName:conv_abuse}
+processed_data_root: ${path:${paths.data_dir}/processed/}
+
+raw_data_paths:
+  _target_: lewidi.data.datamodules.DatasetSplitPaths
+  train: ${paths.data_dir}/raw/ConvAbuse/ConvAbuse_train.json
+  val: ${paths.data_dir}/raw/ConvAbuse/ConvAbuse_dev.json
+  test: ${paths.data_dir}/raw/ConvAbuse/ConvAbuse_test.json

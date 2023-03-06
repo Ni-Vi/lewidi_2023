@@ -1,0 +1,71 @@
+paths:
+  root_dir: ${hydra:runtime.cwd}
+  storage_dir: ${paths.root_dir}/storage
+  data_dir: ${paths.storage_dir}/data
+  log_dir: ${paths.storage_dir}/logs
+  output_dir: ${hydra:runtime.output_dir}
+trainer:
+  _target_: pytorch_lightning.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 1
+  max_epochs: 10
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+callbacks:
+  model_summary:
+    _target_: pytorch_lightning.callbacks.RichModelSummary
+    max_depth: -1
+  rich_progress_bar:
+    _target_: pytorch_lightning.callbacks.RichProgressBar
+loggers:
+  wandb:
+    _target_: pytorch_lightning.loggers.wandb.WandbLogger
+    save_dir: ${paths.output_dir}
+    offline: true
+    entity: lewidi
+    project: lewidi
+    log_model: false
+    group: ""
+    tags: []
+    job_type: ""
+data:
+  dataloader_options:
+    _target_: lewidi.data.datamodules.DataLoaderOptions
+    batch_size: 2
+    shuffle: false
+    num_workers: 2
+    drop_last: true
+  _target_: lewidi.data.LeWiDiSingleTaskDataModule
+  dataset_name: ${DatasetName:conv_abuse}
+  processed_data_root: ${path:${paths.data_dir}/processed/ConvAbuse/}
+  raw_data_paths:
+    _target_: lewidi.data.datamodules.DatasetSplitPaths
+    train: ${paths.data_dir}/raw/ConvAbuse/ConvAbuse_train.json
+    val: ${paths.data_dir}/raw/ConvAbuse/ConvAbuse_dev.json
+    test: ${paths.data_dir}/raw/ConvAbuse/ConvAbuse_test.json
+  tokenizer:
+    _target_: lewidi.data.tokenizers.BERTTokenizer
+    tokenizer:
+      _target_: transformers.AutoTokenizer.from_pretrained
+      pretrained_model_name_or_path: bert-base-uncased
+    tokenize_kwargs:
+      padding: max_length
+      return_attention_mask: true
+model:
+  _target_: lewidi.models.LeWiDiSingleTaskModel
+  backbone:
+    _target_: transformers.AutoModel.from_pretrained
+    pretrained_model_name_or_path: bert-base-uncased
+  head:
+    _target_: lewidi.models.components.ClassifierHead
+    input_dim: 768
+    num_labels: 2
+  optimizer:
+    _target_: torch.optim.Adam
+    _partial_: true
+    lr: 0.001
+    weight_decay: 0.0
+seed: 12345
+train: true

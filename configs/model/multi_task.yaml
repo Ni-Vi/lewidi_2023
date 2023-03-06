@@ -1,0 +1,14 @@
+defaults:
+  - default.yaml
+
+_target_: lewidi.models.LeWiDiMultiTaskModel.from_tasks
+
+backbone:
+  _target_: transformers.AutoModel.from_pretrained
+  pretrained_model_name_or_path: bert-base-uncased
+
+template_head:
+  _target_: lewidi.models.components.ClassifierHead
+  _partial_: true
+  input_dim: 768
+  num_labels: 2

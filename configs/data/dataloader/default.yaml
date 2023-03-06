@@ -1,0 +1,6 @@
+_target_: lewidi.data.datamodules.DataLoaderOptions
+
+batch_size: 64
+shuffle: False
+num_workers: 6
+drop_last: True
